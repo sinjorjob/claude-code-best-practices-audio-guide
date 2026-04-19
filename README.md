@@ -1,6 +1,6 @@
 # Claude Code ベストプラクティス 音声ガイド
 
-**公開 URL**: <!-- TODO: GitHub Pages にデプロイしたら差し替え -->  `https://<user>.github.io/<repo>/`
+**公開 URL**: https://sinjorjob.github.io/claude-code-best-practices-audio-guide/
 
 Anthropic 公式トーク **[Claude Code best practices](https://www.youtube.com/watch?v=gv0WHhKelSE)**（Cal Rueb 氏, 約 25 分）を日本語で再構成し、**再生ボタンを押すと字幕付きで自動スクロールしながら読み上げてくれる Web アプリ**にしたものです。
 
