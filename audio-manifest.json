@@ -1,0 +1,2418 @@
+{
+  "version": 1,
+  "voice": {
+    "model_id": "5161d41404314212af1254556477c17d",
+    "backend": "s2-pro",
+    "narration_style": "[楽しくわくわくするトーンで]",
+    "piyo_style": "[親しい人にかみ砕いて説明するように、落ち着いた温かい声で]"
+  },
+  "blocks": [
+    {
+      "id": "p001",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "intro",
+      "anchor": {
+        "mode": "before",
+        "ref": "b001"
+      },
+      "text": "どうも、Piyofeed です。今日は、プログラミングを助けてくれる AI、「Claude Code」の使いこなし方の話。エンジニアじゃない人も、ちょっと覗いていってみて。「なるほど、そういう道具があるんだ」って分かるだけでも、世の中の見え方がちょっと変わる、はず。",
+      "audio": "audio/p001.mp3",
+      "duration_sec": 19.304,
+      "voice_style": "[温かく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b001",
+      "type": "narration",
+      "kind": "h1",
+      "chapter": "intro",
+      "text": "Claude Code ベストプラクティス",
+      "audio": "audio/b001.mp3",
+      "duration_sec": 2.325,
+      "voice_style": "[力強く]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572186"
+    },
+    {
+      "id": "b002",
+      "type": "narration",
+      "kind": "p.subtitle",
+      "chapter": "intro",
+      "text": "Anthropic の Apply チーム、Cal 氏による公式トーク。Claude Code の仕組み、良い使いどころ、そして本当に効果のある使い方を、25 分にまとめた完全ガイド。",
+      "audio": "audio/b002.mp3",
+      "duration_sec": 13.61,
+      "voice_style": "[落ち着いて]",
+      "prosody": {
+        "speed": 1.0,
+        "volume": 0
+      },
+      "audio_version": "1776572191"
+    },
+    {
+      "id": "b003",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "speaker",
+      "text": "話し手について — なぜ Cal がここに立っているのか",
+      "audio": "audio/b003.mp3",
+      "duration_sec": 3.265,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572192"
+    },
+    {
+      "id": "b004",
+      "type": "narration",
+      "kind": "p.lead",
+      "chapter": "speaker",
+      "text": "Cal 氏は約 1 年半前に Anthropic に入社し、Applied（アプライ）チームを立ち上げた人物だ。チームのミッションは「顧客やパートナーが Claude の上で素晴らしいプロダクトを作るのを助けること」。日々の仕事のほとんどは、モデルから最高の出力を引き出すためにプロンプトを書くことだという。",
+      "audio": "audio/b004.mp3",
+      "duration_sec": 20.898,
+      "voice_style": "[熱く]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572200"
+    },
+    {
+      "id": "b005",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "speaker",
+      "text": "しかし Cal 氏はコードを書くのも好きだ。自分のことを「新しいプロジェクトを山ほど立ち上げるが、ほとんど完成させない、アイデア過多のコーダー」と笑って紹介する。書きかけのコードの「墓場」を抱えたエンジニアは世界中にいる。",
+      "audio": "audio/b005.mp3",
+      "duration_sec": 15.125,
+      "voice_style": "[柔らかく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572206"
+    },
+    {
+      "id": "p002",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "speaker",
+      "anchor": {
+        "mode": "after",
+        "ref": "b005"
+      },
+      "text": "これ、コードだけの話じゃないよね。やりかけの DIY、三日で止まった日記、途中まで編んで放置してあるマフラー——そういう、ほぼ誰もが持ってる「なんとなく後ろめたい棚」。エンジニアが特別じゃないっていう、ちょっと安心する話。",
+      "audio": "audio/p002.mp3",
+      "duration_sec": 20.166,
+      "voice_style": "[親しげに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b006",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "speaker",
+      "text": "金曜の夜、世界が変わった",
+      "audio": "audio/b006.mp3",
+      "duration_sec": 2.691,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572214"
+    },
+    {
+      "id": "b007",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "speaker",
+      "text": "昨年の終わり頃、社内 Slack で「新しいツールがすごいらしい」という噂を聞きつけた Cal 氏は、ある金曜の夜にそれをダウンロードした。のちに Claude Code と呼ばれることになるツールだ。以前から温めていた新しいメモアプリのアイデアにぶつけてみた結果——",
+      "audio": "audio/b007.mp3",
+      "duration_sec": 17.162,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572221"
+    },
+    {
+      "id": "b008",
+      "type": "narration",
+      "kind": "blockquote",
+      "chapter": "speaker",
+      "text": "その週末、コーディングとソフトウェアエンジニアリングに対する考え方が、完全に変わった。",
+      "audio": "audio/b008.mp3",
+      "duration_sec": 7.706,
+      "voice_style": "[感動的に]",
+      "prosody": {
+        "speed": 0.95,
+        "volume": 0
+      },
+      "audio_version": "1776572224"
+    },
+    {
+      "id": "b009",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "speaker",
+      "text": "ラップトップを抱えて週末中歩き回り、Enter キーを押してはブラウザを更新し、巨大で強力なアプリケーションが目の前で組み上がっていくのをただ眺めていた。一人では決して辿り着けなかったところまで辿り着いた——その体験に心を奪われた。",
+      "audio": "audio/b009.mp3",
+      "duration_sec": 19.513,
+      "voice_style": "[感動的に]",
+      "prosody": {
+        "speed": 1.0,
+        "volume": 0
+      },
+      "audio_version": "1776572230"
+    },
+    {
+      "id": "p003",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "speaker",
+      "anchor": {
+        "mode": "after",
+        "ref": "b009"
+      },
+      "text": "新しい面白い道具を手に入れて、気づいたら窓の外が明るくなってる——あの感覚。子どもの頃、ゲーム機を買ってもらった日と、たぶん同じ種類のワクワク。大人になっても、ちゃんと残ってるんだよね。",
+      "audio": "audio/p003.mp3",
+      "duration_sec": 16.248,
+      "voice_style": "[共感的に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b010",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "speaker",
+      "text": "Cal 氏は「トークンを使いすぎて怒られるのでは」と心配していたが、当時 Claude Code チームは社内利用量のリーダーボードを作っていた。その週末、Cal 氏は堂々の 1 位に。これがきっかけでチームとつながり、プロンプトやツール設計、評価の仕事に関わるようになり、今や Claude Code のコアコントリビューターの一人となった。",
+      "audio": "audio/b010.mp3",
+      "duration_sec": 26.044,
+      "voice_style": "[しみじみと]",
+      "prosody": {
+        "speed": 1.0,
+        "volume": 0
+      },
+      "audio_version": "1776572244"
+    },
+    {
+      "id": "b011",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "mental-model",
+      "text": "Claude Code とは — 頭の中のメンタルモデル",
+      "audio": "audio/b011.mp3",
+      "duration_sec": 3.918,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572246"
+    },
+    {
+      "id": "b012",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "mental-model",
+      "text": "「Claude Code って結局何？」と聞かれたとき、Cal 氏はこう答える。",
+      "audio": "audio/b012.mp3",
+      "duration_sec": 4.806,
+      "voice_style": "[問いかけるように]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572248"
+    },
+    {
+      "id": "b013",
+      "type": "narration",
+      "kind": "div.pullquote",
+      "chapter": "mental-model",
+      "text": "すべてをターミナルで完結させてしまう、あの同僚。GUI には決して触れない、ターミナルの魔法使い。",
+      "audio": "audio/b013.mp3",
+      "duration_sec": 10.188,
+      "voice_style": "[感動的に]",
+      "prosody": {
+        "speed": 0.95,
+        "volume": 0
+      },
+      "audio_version": "1776572251"
+    },
+    {
+      "id": "b014",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "mental-model",
+      "text": "Cal 氏は駆け出しエンジニア時代のメンターを思い出す。バグに詰まって机まで行くと、彼は自分のターミナルをぐるりとこちらに向け、狂ったような bash コマンドと vim の操作で、あれよあれよという間に問題を解決してしまう。こちらは「すごい…いつか覚えよう」と思いながら席に戻り、結局覚えずじまいで終わる——そんな経験だ。",
+      "audio": "audio/b014.mp3",
+      "duration_sec": 25.13,
+      "voice_style": "[しみじみと]",
+      "prosody": {
+        "speed": 1.0,
+        "volume": 0
+      },
+      "audio_version": "1776572259"
+    },
+    {
+      "id": "b015",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "mental-model",
+      "text": "Claude Code をパソコンに入れることは、そのターミナル魔法使いをいつでも隣に座らせておくことに等しい。呼べば即答してくれるトニーが、常時待機している状態である。",
+      "audio": "audio/b015.mp3",
+      "duration_sec": 13.766,
+      "voice_style": "[感動的に]",
+      "prosody": {
+        "speed": 1.0,
+        "volume": 0
+      },
+      "audio_version": "1776572265"
+    },
+    {
+      "id": "p004",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "mental-model",
+      "anchor": {
+        "mode": "after",
+        "ref": "b015"
+      },
+      "text": "ざっくり言うと、パソコンに話しかけると、パソコンが代わりに作業を進めてくれる——そういうイメージ。しかも、疲れない、夜中に起こしていい、同じこと何回聞いても怒らない。人間の先輩には、なかなか頼めないやつ。",
+      "audio": "audio/p004.mp3",
+      "duration_sec": 16.196,
+      "voice_style": "[フレンドリーに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b016",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "under-hood",
+      "text": "仕組みを覗く — Claude Code はどう動いているのか",
+      "audio": "audio/b016.mp3",
+      "duration_sec": 3.213,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572272"
+    },
+    {
+      "id": "b017",
+      "type": "narration",
+      "kind": "p.lead",
+      "chapter": "under-hood",
+      "text": "道具の仕組みを知っておくと、使い方はぐっとうまくなる。Anthropic の設計哲学は一貫してひとつ——「動く、いちばんシンプルなもの」を作ること。",
+      "audio": "audio/b017.mp3",
+      "duration_sec": 9.639,
+      "voice_style": "[熱く]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572276"
+    },
+    {
+      "id": "p005",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "under-hood",
+      "anchor": {
+        "mode": "after",
+        "ref": "b017"
+      },
+      "text": "機能を足すのは簡単、でも、足したものを取り戻すのは難しい。これ、アプリでも、家の物でも、仕事のルールでも、たぶん同じ話。「シンプルに保ち続ける」って、じつは一番むずかしい技術だったりする。",
+      "audio": "audio/p005.mp3",
+      "duration_sec": 16.483,
+      "voice_style": "[親しげに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b018",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "under-hood",
+      "text": "Claude Code は「純粋なエージェント」である",
+      "audio": "audio/b018.mp3",
+      "duration_sec": 2.56,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572283"
+    },
+    {
+      "id": "b019",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "under-hood",
+      "text": "Anthropic では、エージェントとは次のものを指す：",
+      "audio": "audio/b019.mp3",
+      "duration_sec": 4.206,
+      "voice_style": "[丁寧に]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572284"
+    },
+    {
+      "id": "b020",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "under-hood",
+      "text": "指示（どう振る舞うべきかのプロンプト）",
+      "audio": "audio/b020.mp3",
+      "duration_sec": 2.377,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572286"
+    },
+    {
+      "id": "b021",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "under-hood",
+      "text": "強力なツール（ファイル編集、ターミナル、等）",
+      "audio": "audio/b021.mp3",
+      "duration_sec": 3.213,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572287"
+    },
+    {
+      "id": "b022",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "under-hood",
+      "text": "ループ（モデル自身が「終わった」と判断するまで回り続ける）",
+      "audio": "audio/b022.mp3",
+      "duration_sec": 4.676,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572289"
+    },
+    {
+      "id": "b023",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "under-hood",
+      "text": "Claude Code はまさにこの定義の素直な実装だ。「ターミナルが得意な人ならこれらを使うだろう」というツール——ファイルの読み書き、ターミナル実行、さらに MCP 経由で拡張される外部ツール——を、モデルに渡して自由に使わせる。",
+      "audio": "audio/b023.mp3",
+      "duration_sec": 15.673,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572295"
+    },
+    {
+      "id": "b024",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "under-hood",
+      "text": "コードベースの理解 — 索引せず、探検する",
+      "audio": "audio/b024.mp3",
+      "duration_sec": 3.317,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572297"
+    },
+    {
+      "id": "b025",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "under-hood",
+      "text": "1 年前にコーディングエージェントを設計するなら、こう考えただろう：「コードベース全体をインデックス化して、ベクトル埋め込みで RAG 検索を…」。",
+      "audio": "audio/b025.mp3",
+      "duration_sec": 10.214,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572301"
+    },
+    {
+      "id": "b026",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "under-hood",
+      "text": "Claude Code はそれをしない。インデックスは作らない。",
+      "audio": "audio/b026.mp3",
+      "duration_sec": 3.892,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572302"
+    },
+    {
+      "id": "b027",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "under-hood",
+      "text": "代わりに、新しいチームに入った開発者が実際にやるのと同じ方法で、コードベースを探検する。エージェンティック検索と呼ばれる手法だ。",
+      "audio": "audio/b027.mp3",
+      "duration_sec": 10.109,
+      "voice_style": "[丁寧に]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572306"
+    },
+    {
+      "id": "b028",
+      "type": "narration",
+      "kind": "div.feat-card",
+      "chapter": "under-hood",
+      "text": "glob パターンマッチで関連ファイルを一気に絞り込む",
+      "audio": "audio/b028.mp3",
+      "duration_sec": 3.631,
+      "voice_style": "[わくわく]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572308"
+    },
+    {
+      "id": "b029",
+      "type": "narration",
+      "kind": "div.feat-card",
+      "chapter": "under-hood",
+      "text": "grep 中身を読まずに「使っている場所」を見つける",
+      "audio": "audio/b029.mp3",
+      "duration_sec": 3.448,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572309"
+    },
+    {
+      "id": "b030",
+      "type": "narration",
+      "kind": "div.feat-card",
+      "chapter": "under-hood",
+      "text": "find / read 必要なファイルだけを狙って読む",
+      "audio": "audio/b030.mp3",
+      "duration_sec": 3.579,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572311"
+    },
+    {
+      "id": "b031",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "under-hood",
+      "text": "モデルは何度か検索し、結果を眺め、「もう少し何かを確認する必要がありそうだ」と判断したら、また検索する。これを繰り返すうちに、コードベースの地図が頭の中に組み上がっていく。人間の開発者と同じやり方だ。",
+      "audio": "audio/b031.mp3",
+      "duration_sec": 14.681,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572316"
+    },
+    {
+      "id": "p006",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "under-hood",
+      "anchor": {
+        "mode": "after",
+        "ref": "b031"
+      },
+      "text": "ざっくり言うと、普通の AI は、最初にコード全体を丸ごと記憶してから答えようとする。Claude は違って、必要なときに必要なところだけ見に行く。新しい会社に入った新人さんが、フォルダを一つずつ開けて回る感じ。遠回りに見えて、じつはそのほうが、深く理解できる。",
+      "audio": "audio/p006.mp3",
+      "duration_sec": 22.204,
+      "voice_style": "[フレンドリーに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b032",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "under-hood",
+      "text": "周辺レイヤー — UI、許可、セキュリティ",
+      "audio": "audio/b032.mp3",
+      "duration_sec": 3.056,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572325"
+    },
+    {
+      "id": "b033",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "under-hood",
+      "text": "エージェント本体の周りには、いくつかの薄い層が乗っている：",
+      "audio": "audio/b033.mp3",
+      "duration_sec": 4.597,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572327"
+    },
+    {
+      "id": "b034",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "under-hood",
+      "text": "軽量な UI：Claude が何をしているかリアルタイムで見える",
+      "audio": "audio/b034.mp3",
+      "duration_sec": 3.709,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572329"
+    },
+    {
+      "id": "b035",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "under-hood",
+      "text": "許可システム：危険な操作の前で必ず人間に確認を取る",
+      "audio": "audio/b035.mp3",
+      "duration_sec": 4.833,
+      "voice_style": "[真剣に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572332"
+    },
+    {
+      "id": "b036",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "under-hood",
+      "text": "セキュリティ重視の設計：Anthropic API だけでなく AWS（Bedrock）や GCP（Vertex AI）にも向けられる。自分のインフラで Claude を使いたい組織でもそのまま動く",
+      "audio": "audio/b036.mp3",
+      "duration_sec": 11.415,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572337"
+    },
+    {
+      "id": "b037",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "use-cases",
+      "text": "活用シーン — 結局、何に使えばいいのか",
+      "audio": "audio/b037.mp3",
+      "duration_sec": 3.788,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572338"
+    },
+    {
+      "id": "b038",
+      "type": "narration",
+      "kind": "p.lead",
+      "chapter": "use-cases",
+      "text": "「Claude Code って何に向いているの？」とよく聞かれる。率直な答えは、大体なんでも得意。ただし、輝く場面は確かにある。",
+      "audio": "audio/b038.mp3",
+      "duration_sec": 9.822,
+      "voice_style": "[熱く]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572342"
+    },
+    {
+      "id": "b039",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "use-cases",
+      "text": "ディスカバリーとオンボーディング 新しいコードベースに放り込まれた最初の数日、人は最も非生産的になる。Claude に「この機能はどこに実装されてる？」「このファイルの Git 履歴を見て、過去数週間でどう変わったか物語風に説明して」と聞けば、立ち上がりが一気に早くなる。",
+      "audio": "audio/b039.mp3",
+      "duration_sec": 19.827,
+      "voice_style": "[問いかけるように]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572350"
+    },
+    {
+      "id": "b040",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "use-cases",
+      "text": "思考のパートナーとして使う（過小評価されている使い方） いきなり実装させるのではなく、まずはこう頼むといい：「この機能を実装したい。コードベースを調べて、2〜3 の実装方針を報告して。まだコードは書かないで」。返ってきた方針を吟味してから、合意できた方向で着手する。",
+      "audio": "audio/b040.mp3",
+      "duration_sec": 21.055,
+      "voice_style": "[優しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776590230"
+    },
+    {
+      "id": "p007",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "use-cases",
+      "anchor": {
+        "mode": "after",
+        "ref": "b040"
+      },
+      "text": "「作り始める前に、段取りを言ってみて」ってお願いするだけで、仕上がりが全然違ってくる。これ、工務店さんに家を建ててもらうとき、いきなり釘を打ち始められたら困るよね、っていうのと、たぶん同じ話。「まず計画を聞く」は、どんな仕事でも効くやつ。",
+      "audio": "audio/p007.mp3",
+      "duration_sec": 17.763,
+      "voice_style": "[親しげに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b041",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "use-cases",
+      "text": "ゼロからの構築 空のディレクトリに「ゲームを作って」「アプリを作って」——デモ映えする使い方。とても楽しく、気持ちがいい。",
+      "audio": "audio/b041.mp3",
+      "duration_sec": 7.732,
+      "voice_style": "[わくわく]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572367"
+    },
+    {
+      "id": "b042",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "use-cases",
+      "text": "既存コードベースでの開発（こちらが本丸） 現実に重要なのはこちら。Claude Code チーム自身のコードベースでは ユニットテストのカバレッジが異常に高い——テストを書くのが驚くほど簡単だからだ。コミットメッセージや PR の説明も整っている。「コミットして」「PR メッセージ書いて」と言うだけでいい。",
+      "audio": "audio/b042.mp3",
+      "duration_sec": 18.756,
+      "voice_style": "[わくわく]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572376"
+    },
+    {
+      "id": "p008",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "use-cases",
+      "anchor": {
+        "mode": "after",
+        "ref": "b042"
+      },
+      "text": "「一から何か作る」動画って見栄えはするけど、現場の仕事の大半は、誰かがすでに作ったものを直すほう。新築じゃなくて、リフォーム。Claude は、じつはリフォーム工事のほうが得意、っていう話。",
+      "audio": "audio/p008.mp3",
+      "duration_sec": 14.289,
+      "voice_style": "[親しげに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b043",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "use-cases",
+      "text": "軽量なデプロイ・ライフサイクル自動化 Claude Code には SDK（ヘッドレス利用、プログラマブル利用）がある。CI/CD に組み込む、GitHub Actions から呼び出す——コーディングエージェントを好きな場所に振りかけられる。",
+      "audio": "audio/b043.mp3",
+      "duration_sec": 13.348,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572386"
+    },
+    {
+      "id": "b044",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "use-cases",
+      "text": "サポートと大規模リファクタ 顧客の中には「古い Java から新しい Java へ」「PHP から React / Angular へ」といった、長年先延ばしにしてきた大規模移行を抱えるチームが多かった。Claude Code があると、こうしたプロジェクトが「一ヶ月リファクタに使います」とチームに切り出せる程度にまで消化しやすくなる。",
+      "audio": "audio/b044.mp3",
+      "duration_sec": 18.756,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572394"
+    },
+    {
+      "id": "b045",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "use-cases",
+      "text": "Claude Code は git 、 docker 、 bq （BigQuery）など、あらゆる CLI を使いこなせる。たとえば「厄介な rebase から抜け出せない」ような状況でも、状況を説明して「直して」と頼むだけで、するりと抜け出してくれる。CLI があるところ、Claude Code の出番がある。",
+      "audio": "audio/b045.mp3",
+      "duration_sec": 19.2,
+      "voice_style": "[丁寧に]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572401"
+    },
+    {
+      "id": "b046",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "best-practices",
+      "text": "ベストプラクティス — 本当に効くやり方",
+      "audio": "audio/b046.mp3",
+      "duration_sec": 2.664,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572403"
+    },
+    {
+      "id": "b047",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "best-practices",
+      "text": "1. CLAUDE.md ファイルを使う",
+      "audio": "audio/b047.mp3",
+      "duration_sec": 4.049,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572404"
+    },
+    {
+      "id": "b048",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "best-practices",
+      "text": "Claude Code はエージェントだが、記憶を持たない。セッションをまたいで、あるいはチーム間で「このコードベースの文脈」を共有する主な方法が、 CLAUDE.md というファイルだ。",
+      "audio": "audio/b048.mp3",
+      "duration_sec": 12.016,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572409"
+    },
+    {
+      "id": "b049",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "best-practices",
+      "text": "起動時に作業ディレクトリに CLAUDE.md があれば、その内容はプロンプトに差し込まれる。メッセージとしては次のような扱いだ：「開発者が残してくれた重要な指示です。よく読んでください。」",
+      "audio": "audio/b049.mp3",
+      "duration_sec": 12.617,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572413"
+    },
+    {
+      "id": "b050",
+      "type": "narration",
+      "kind": "h4",
+      "chapter": "best-practices",
+      "text": "どこに置くか",
+      "audio": "audio/b050.mp3",
+      "duration_sec": 1.071,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572414"
+    },
+    {
+      "id": "b051",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "best-practices",
+      "text": "プロジェクトにチェックインする（チーム全員で共有）",
+      "audio": "audio/b051.mp3",
+      "duration_sec": 2.743,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572415"
+    },
+    {
+      "id": "b052",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "best-practices",
+      "text": "ホームディレクトリに置く（プロジェクトによらず、常に Claude に知っておいてほしいこと）",
+      "audio": "audio/b052.mp3",
+      "duration_sec": 4.78,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572417"
+    },
+    {
+      "id": "b053",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "best-practices",
+      "text": "サブディレクトリに置く（モノレポの場合、関連するときだけ Claude が自動で読み込む）",
+      "audio": "audio/b053.mp3",
+      "duration_sec": 5.877,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572420"
+    },
+    {
+      "id": "b054",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "best-practices",
+      "text": "過去の Claude（3.7 等）は、CLAUDE.md に「コメントを残すな」と書いても、なぜかコメントを残したがる性質があった。Claude 4 ではここが大きく改善されている。新モデルに移行するタイミングで、CLAUDE.md を見直してみるといい——不要になった指示があるかもしれないし、新たに加えるべきことも出てくるはずだ。",
+      "audio": "audio/b054.mp3",
+      "duration_sec": 23.876,
+      "voice_style": "[優しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572428"
+    },
+    {
+      "id": "p009",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "best-practices",
+      "anchor": {
+        "mode": "after",
+        "ref": "b054"
+      },
+      "text": "CLAUDE.md っていうのは、プロジェクトに置いておく「メモ帳」みたいなもの。「うちはこういうルールでやってます」を、Claude に先に渡しておくためのメモ。完璧を書こうとすると手が止まるから、最初は三行でいい。会社の「新人向け引き継ぎメモ」、あれと同じ発想。",
+      "audio": "audio/p009.mp3",
+      "duration_sec": 19.644,
+      "voice_style": "[フレンドリーに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b055",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "best-practices",
+      "text": "2. 許可（パーミッション）を賢く管理する",
+      "audio": "audio/b055.mp3",
+      "duration_sec": 4.493,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572437"
+    },
+    {
+      "id": "b056",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "best-practices",
+      "text": "デフォルトでは、Claude Code は読み取り系（検索・ファイル閲覧）は自由にやらせる。しかし書き込みやシェルコマンドのように、マシンに影響を与えるものに入ると、承認 UI が立ち上がる：「はい」「常に許可」「別のやり方をさせる」。",
+      "audio": "audio/b056.mp3",
+      "duration_sec": 15.595,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572444"
+    },
+    {
+      "id": "b057",
+      "type": "narration",
+      "kind": "div.feat-card",
+      "chapter": "best-practices",
+      "text": "Shift + Tab auto-accept モード。Claude が確認なしで走り続ける",
+      "audio": "audio/b057.mp3",
+      "duration_sec": 5.146,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572446"
+    },
+    {
+      "id": "b058",
+      "type": "narration",
+      "kind": "div.feat-card",
+      "chapter": "best-practices",
+      "text": "常に許可リスト 例： npm run test は毎回 Yes を押したくない。設定で自動許可に",
+      "audio": "audio/b058.mp3",
+      "duration_sec": 5.851,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572448"
+    },
+    {
+      "id": "b059",
+      "type": "narration",
+      "kind": "div.feat-card",
+      "chapter": "best-practices",
+      "text": "Escape キー 暴走を感じたら即停止。割り込んで軌道修正できる",
+      "audio": "audio/b059.mp3",
+      "duration_sec": 5.407,
+      "voice_style": "[真剣に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572450"
+    },
+    {
+      "id": "p010",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "best-practices",
+      "anchor": {
+        "mode": "after",
+        "ref": "b059"
+      },
+      "text": "Claude が勝手にどんどん作業を進めるモード、便利なんだけど、最初のうちは使わないほうがいい。初めて乗る自動運転の車と一緒で、しばらくは横で何してるか見ていたほうが、あとで慌てずに済むから。",
+      "audio": "audio/p010.mp3",
+      "duration_sec": 15.987,
+      "voice_style": "[優しく真剣に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b060",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "best-practices",
+      "text": "3. 統合とツールの整備",
+      "audio": "audio/b060.mp3",
+      "duration_sec": 2.769,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572458"
+    },
+    {
+      "id": "b061",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "best-practices",
+      "text": "Claude Code の真価は、ターミナル上の CLI をどれだけ渡せるかにかかっている。良い出発点：",
+      "audio": "audio/b061.mp3",
+      "duration_sec": 7.21,
+      "voice_style": "[優しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572461"
+    },
+    {
+      "id": "b062",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "best-practices",
+      "text": "gh （GitHub CLI） — PR、Issue、Actions まで操作できる",
+      "audio": "audio/b062.mp3",
+      "duration_sec": 5.721,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572463"
+    },
+    {
+      "id": "b063",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "best-practices",
+      "text": "Docker、kubectl、AWS CLI、Terraform — いつもの運用ツール",
+      "audio": "audio/b063.mp3",
+      "duration_sec": 4.754,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572465"
+    },
+    {
+      "id": "b064",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "best-practices",
+      "text": "社内ツール（Anthropic では koo ）— 自社の CLI は CLAUDE.md に書いておく",
+      "audio": "audio/b064.mp3",
+      "duration_sec": 5.094,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572467"
+    },
+    {
+      "id": "b065",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "best-practices",
+      "text": "よく使われていて文書も豊富な CLI ツールなら、まず CLI をインストールするのが無難。MCP サーバー経由で機能を足すのは、CLI では届かない領域に踏み込むときの選択肢として考えるといい。",
+      "audio": "audio/b065.mp3",
+      "duration_sec": 13.871,
+      "voice_style": "[優しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572472"
+    },
+    {
+      "id": "b066",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "best-practices",
+      "text": "4. コンテキスト管理 — 200K トークンと上手に付き合う",
+      "audio": "audio/b066.mp3",
+      "duration_sec": 4.493,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776590232"
+    },
+    {
+      "id": "b067",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "best-practices",
+      "text": "Anthropic のモデルは 200,000 トークンという広大なコンテキストウィンドウを持つ。とはいえ、ツール呼び出しの結果が積み上がれば、いつかは上限にぶつかる。Claude Code は右下に「そろそろ埋まるよ」と警告を出してくれる。そのとき取れる手段は 2 つ：",
+      "audio": "audio/b067.mp3",
+      "duration_sec": 15.595,
+      "voice_style": "[真剣に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776590238"
+    },
+    {
+      "id": "b068",
+      "type": "narration",
+      "kind": "div.feat-card",
+      "chapter": "best-practices",
+      "text": "まっさらにして再開 履歴を消して CLAUDE.md だけ残す。話題が変わったときに最適。",
+      "audio": "audio/b068.mp3",
+      "duration_sec": 7.027,
+      "voice_style": "[感動的に]",
+      "prosody": {
+        "speed": 1.0,
+        "volume": 0
+      },
+      "audio_version": "1776572483"
+    },
+    {
+      "id": "b069",
+      "type": "narration",
+      "kind": "div.feat-card",
+      "chapter": "best-practices",
+      "text": "要約して引き継ぐ 「別の開発者に引き継ぐつもりで、今までの作業を要約して」とクロードに依頼し、その要約を種に次のセッションを始める。仕事の継続が必要なときに。",
+      "audio": "audio/b069.mp3",
+      "duration_sec": 11.572,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572487"
+    },
+    {
+      "id": "b070",
+      "type": "narration",
+      "kind": "p.lead",
+      "chapter": "best-practices",
+      "text": "Claude Code チームは /compact の挙動を特に丁寧にチューニングしている。コンテキストを使い切っても、compact → そのまま続行、という流れが成立するように。",
+      "audio": "audio/b070.mp3",
+      "duration_sec": 10.919,
+      "voice_style": "[熱く]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572491"
+    },
+    {
+      "id": "p011",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "best-practices",
+      "anchor": {
+        "mode": "after",
+        "ref": "b070"
+      },
+      "text": "AI って、会話が長くなると、最初のほうの話を忘れちゃうんだよね。記憶の容量に限界があるから。Claude はそこが工夫されていて、「これまでの話を要約して引き継ぐ」ボタンがある。長い会議の最後に「じゃ、今日の議事録まとめとくね」って言ってくれる、あの感じ。",
+      "audio": "audio/p011.mp3",
+      "duration_sec": 19.905,
+      "voice_style": "[共感的に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b071",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "workflows",
+      "text": "効率的なワークフロー",
+      "audio": "audio/b071.mp3",
+      "duration_sec": 1.829,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572499"
+    },
+    {
+      "id": "b072",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "workflows",
+      "text": "プランニングと To-Do リストを使う",
+      "audio": "audio/b072.mp3",
+      "duration_sec": 2.508,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572500"
+    },
+    {
+      "id": "b073",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "workflows",
+      "text": "最高のやり方のひとつは——いきなり「バグを直して」と言わないこと。代わりにこう頼む：",
+      "audio": "audio/b073.mp3",
+      "duration_sec": 5.982,
+      "voice_style": "[わくわく]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572502"
+    },
+    {
+      "id": "b074",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "workflows",
+      "text": "「このバグがある。コードベースを調べて、原因を特定して、どう直すつもりかプランを教えて。」",
+      "audio": "audio/b074.mp3",
+      "duration_sec": 6.243,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572506"
+    },
+    {
+      "id": "b075",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "workflows",
+      "text": "プランを読めば、Claude がこれからやろうとしていることを事前に検証できる。時間を大幅に節約できる。",
+      "audio": "audio/b075.mp3",
+      "duration_sec": 7.001,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572509"
+    },
+    {
+      "id": "b076",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "workflows",
+      "text": "大きめのタスクでは、Claude が自分で To-Do リストを作る。作業を横目で見ながら、リストに変な項目や意図からずれたものが混じっていたら、Escape で止めて「このリスト、変えたい。方向が違うと思う」と介入する——これが理想的な関わり方だ。",
+      "audio": "audio/b076.mp3",
+      "duration_sec": 17.502,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572515"
+    },
+    {
+      "id": "p012",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "workflows",
+      "anchor": {
+        "mode": "after",
+        "ref": "b076"
+      },
+      "text": "さっきも言ったけど、大事だからもう一度。「始める前に、段取りを聞く」。一手間に見えて、これで「やり直し」がごっそり減る。仕事でも、料理でも、たぶん同じ。",
+      "audio": "audio/p012.mp3",
+      "duration_sec": 13.192,
+      "voice_style": "[優しく真剣に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b077",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "workflows",
+      "text": "賢い「バイブコーディング」",
+      "audio": "audio/b077.mp3",
+      "duration_sec": 2.064,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572521"
+    },
+    {
+      "id": "b078",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "workflows",
+      "text": "Claude に任せて Enter を押し、結果を待つ——楽しいし強力だが、落とし穴もある。以下を守ると大外れが減る：",
+      "audio": "audio/b078.mp3",
+      "duration_sec": 10.057,
+      "voice_style": "[真剣に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572525"
+    },
+    {
+      "id": "b079",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "workflows",
+      "text": "テスト駆動で：小さな変更 → テスト実行 → 通る、を繰り返させる",
+      "audio": "audio/b079.mp3",
+      "duration_sec": 5.512,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572527"
+    },
+    {
+      "id": "b080",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "workflows",
+      "text": "常に TypeScript と Lint をチェックさせる",
+      "audio": "audio/b080.mp3",
+      "duration_sec": 2.691,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572528"
+    },
+    {
+      "id": "b081",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "workflows",
+      "text": "こまめにコミットする。暴走したら git で戻ればいい",
+      "audio": "audio/b081.mp3",
+      "duration_sec": 4.702,
+      "voice_style": "[真剣に]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572531"
+    },
+    {
+      "id": "p013",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "workflows",
+      "anchor": {
+        "mode": "after",
+        "ref": "b081"
+      },
+      "text": "エンジニア向けの話に聞こえるけど——かみ砕くと、ゲームの「セーブポイント」みたいなもの。こまめに保存しておけば、失敗してもちょっと前に戻れる。保存してなかったときに泣くのは、ゲームも仕事も一緒。",
+      "audio": "audio/p013.mp3",
+      "duration_sec": 13.61,
+      "voice_style": "[フレンドリーに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b082",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "workflows",
+      "text": "スクリーンショットでガイド・デバッグ",
+      "audio": "audio/b082.mp3",
+      "duration_sec": 2.429,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572537"
+    },
+    {
+      "id": "b083",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "workflows",
+      "text": "Claude のモデルはマルチモーダルだ。画像を貼り付けるか、プロジェクト内のファイルを指して「この mock.png を見てウェブサイトを作って」と言うだけでいい。UI のバグ報告にも有効——スクショを渡して「この見え方を直して」で話が通じる。",
+      "audio": "audio/b083.mp3",
+      "duration_sec": 19.383,
+      "voice_style": "[優しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572544"
+    },
+    {
+      "id": "b084",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "advanced",
+      "text": "応用テクニック — 次のレベルへ",
+      "audio": "audio/b084.mp3",
+      "duration_sec": 2.403,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572545"
+    },
+    {
+      "id": "b085",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "advanced",
+      "text": "複数の Claude を同時に走らせる",
+      "audio": "audio/b085.mp3",
+      "duration_sec": 2.56,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572546"
+    },
+    {
+      "id": "b086",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "advanced",
+      "text": "使いこなしてくると、どうしても複数の Claude を並列で動かしたくなる。Anthropic 社内にも、顧客の中にも、同時に 4 つの Claude を回している人たちがいる。tmux、別タブ、別ワークツリー——手段はさまざま。",
+      "audio": "audio/b086.mp3",
+      "duration_sec": 13.636,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572551"
+    },
+    {
+      "id": "b087",
+      "type": "narration",
+      "kind": "blockquote",
+      "chapter": "advanced",
+      "text": "自分は 2 つが精一杯。でも 4 つ同時に走らせる人を知っている。挑戦してみて。",
+      "audio": "audio/b087.mp3",
+      "duration_sec": 8.229,
+      "voice_style": "[感動的に]",
+      "prosody": {
+        "speed": 0.95,
+        "volume": 0
+      },
+      "audio_version": "1776572554"
+    },
+    {
+      "id": "p014",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "advanced",
+      "anchor": {
+        "mode": "after",
+        "ref": "b087"
+      },
+      "text": "Claude を同時に四つ動かしてる人、本当にいる。言ってみれば、アシスタントを四人同時に指示してる状態。できるけど、最初からそれを目指すと、だいたい疲れるだけ。二人くらいが、人間の頭にやさしい数だと思う。",
+      "audio": "audio/p014.mp3",
+      "duration_sec": 15.386,
+      "voice_style": "[フレンドリーに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b088",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "advanced",
+      "text": "Escape は最高の友達",
+      "audio": "audio/b088.mp3",
+      "duration_sec": 2.142,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572561"
+    },
+    {
+      "id": "b089",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "advanced",
+      "text": "Claude が作業している間、常に見ていて、違うと思った瞬間 Escape で止める——これは使いこなしの肝だ。いつ止めるべきか、いつ任せるべきかの嗅覚が、生産性を決める。",
+      "audio": "audio/b089.mp3",
+      "duration_sec": 10.815,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572565"
+    },
+    {
+      "id": "b090",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "advanced",
+      "text": "Escape を 2 回押すと、会話の途中まで戻れる。分岐点までジャンプしてやり直せる、知る人ぞ知る機能。",
+      "audio": "audio/b090.mp3",
+      "duration_sec": 6.896,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572568"
+    },
+    {
+      "id": "p015",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "advanced",
+      "anchor": {
+        "mode": "after",
+        "ref": "b090"
+      },
+      "text": "話してる途中で「あ、さっきの方針、間違ってたかも」って思ったとき、キーボードの Escape を二回押すと、少し前のところまで戻れる。ゲームで「前のセーブに戻る」に近い動き。知ってる人と知らない人で、作業の快適さがだいぶ違う、静かな隠れ機能。",
+      "audio": "audio/p015.mp3",
+      "duration_sec": 19.226,
+      "voice_style": "[親しげに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b091",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "advanced",
+      "text": "ツール拡張と MCP",
+      "audio": "audio/b091.mp3",
+      "duration_sec": 2.09,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572575"
+    },
+    {
+      "id": "b092",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "advanced",
+      "text": "Bash と標準ツールだけでは届かない領域に行きたくなったら、MCP サーバーを検討するタイミング。社内データベース、ナレッジベース、専用 SaaS——自社固有の知識源を Claude に繋ぐ手段として有効。",
+      "audio": "audio/b092.mp3",
+      "duration_sec": 13.557,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572581"
+    },
+    {
+      "id": "b093",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "advanced",
+      "text": "ヘッドレス自動化",
+      "audio": "audio/b093.mp3",
+      "duration_sec": 1.411,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572581"
+    },
+    {
+      "id": "b094",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "advanced",
+      "text": "Anthropic がいま最も興奮している領域であり、同時にまだ手探りしている領域でもある。プログラムから Claude をどう使うか？",
+      "audio": "audio/b094.mp3",
+      "duration_sec": 9.012,
+      "voice_style": "[問いかけるように]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572586"
+    },
+    {
+      "id": "b095",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "advanced",
+      "text": "GitHub Actions に Claude Code を組み込む",
+      "audio": "audio/b095.mp3",
+      "duration_sec": 2.926,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572587"
+    },
+    {
+      "id": "b096",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "advanced",
+      "text": "CI/CD パイプラインから呼び出す",
+      "audio": "audio/b096.mp3",
+      "duration_sec": 2.351,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572588"
+    },
+    {
+      "id": "b097",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "advanced",
+      "text": "テスト実行後の自動修正、ログ解析、レビュー補助…",
+      "audio": "audio/b097.mp3",
+      "duration_sec": 3.866,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572590"
+    },
+    {
+      "id": "b098",
+      "type": "narration",
+      "kind": "p.lead",
+      "chapter": "advanced",
+      "text": "「みなさんにも、この方向を一緒に探してほしい」——Cal",
+      "audio": "audio/b098.mp3",
+      "duration_sec": 4.493,
+      "voice_style": "[熱く]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572592"
+    },
+    {
+      "id": "b099",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "whats-new",
+      "text": "最新アップデート — 追いつき続けるために",
+      "audio": "audio/b099.mp3",
+      "duration_sec": 2.978,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572593"
+    },
+    {
+      "id": "b100",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "whats-new",
+      "text": "Claude Code は出荷速度が異常に速い。Cal 氏自身が「自分でもついていけない」と笑う。プレゼン当日時点で新しかったものを一部紹介する。",
+      "audio": "audio/b100.mp3",
+      "duration_sec": 10.031,
+      "voice_style": "[柔らかく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572597"
+    },
+    {
+      "id": "b101",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "whats-new",
+      "text": "モデル切り替え：/model と /config",
+      "audio": "audio/b101.mp3",
+      "duration_sec": 3.03,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572598"
+    },
+    {
+      "id": "b102",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "whats-new",
+      "text": "起動後に /model を打つと、現在どのモデルで動いているかわかる。デフォルト（Sonnet）から Opus へ切り替えることも、 /config からも同じ操作ができる。用途に合ったモデルを選び直せる。",
+      "audio": "audio/b102.mp3",
+      "duration_sec": 12.434,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572603"
+    },
+    {
+      "id": "b103",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "whats-new",
+      "text": "ツール呼び出しの「あいだ」で考える",
+      "audio": "audio/b103.mp3",
+      "duration_sec": 2.377,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572604"
+    },
+    {
+      "id": "b104",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "whats-new",
+      "text": "以前から think hard や拡張思考（Extended Thinking）はあったが、過去のモデルではツール呼び出しの間では思考させていなかった——本当に考えたい瞬間は、まさにそこなのに、だ。",
+      "audio": "audio/b104.mp3",
+      "duration_sec": 13.819,
+      "voice_style": "[確信を持って]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572609"
+    },
+    {
+      "id": "b105",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "whats-new",
+      "text": "Claude 4 からは、ツール呼び出しの間でも思考する。画面では薄いグレーのテキストで思考が流れ、ファイルを読んでまた考え、次の行動を決める。バグ解決や複雑なタスクでは think hard を一言添えるといい。",
+      "audio": "audio/b105.mp3",
+      "duration_sec": 14.994,
+      "voice_style": "[優しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572614"
+    },
+    {
+      "id": "b106",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "whats-new",
+      "text": "難しいタスクを頼むときは、プロンプトに「think hard」や「ultrathink」を入れる。Claude 4 はツール呼び出しの合間にも深く考えてくれるので、効き目が段違い。",
+      "audio": "audio/b106.mp3",
+      "duration_sec": 9.953,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572618"
+    },
+    {
+      "id": "p016",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "whats-new",
+      "anchor": {
+        "mode": "after",
+        "ref": "b106"
+      },
+      "text": "「think hard」、直訳すると「ちゃんと考えて」。これを一言添えるだけで、Claude が、さっきより一段深く考えてくれる。「しっかり頼むね」って一声かけると、人間も丁寧になる——あれに、ちょっと似てる。",
+      "audio": "audio/p016.mp3",
+      "duration_sec": 15.36,
+      "voice_style": "[親しげに]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      }
+    },
+    {
+      "id": "b107",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "whats-new",
+      "text": "VS Code / JetBrains 統合の強化",
+      "audio": "audio/b107.mp3",
+      "duration_sec": 3.239,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572625"
+    },
+    {
+      "id": "b108",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "whats-new",
+      "text": "エディタとの統合が新しくなり、Claude はいま開いているファイルが何かを自動で認識する。「この file を〜して」と曖昧な指示でも、コンテキストを拾ってくれる。",
+      "audio": "audio/b108.mp3",
+      "duration_sec": 9.195,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572629"
+    },
+    {
+      "id": "b109",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "whats-new",
+      "text": "追いつき方",
+      "audio": "audio/b109.mp3",
+      "duration_sec": 1.254,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572629"
+    },
+    {
+      "id": "b110",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "whats-new",
+      "text": "GitHub の anthropic/claude-code を見ると、Issue 報告も、チェンジログも公開されている。Cal 氏も週に一度はここを眺めて、新機能を把握するようにしているそうだ。",
+      "audio": "audio/b110.mp3",
+      "duration_sec": 11.285,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572634"
+    },
+    {
+      "id": "b111",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "qa",
+      "text": "Q&A — 会場からの質問",
+      "audio": "audio/b111.mp3",
+      "duration_sec": 2.246,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572634"
+    },
+    {
+      "id": "b112",
+      "type": "narration",
+      "kind": "summary",
+      "chapter": "qa",
+      "text": "プロジェクト内に複数の CLAUDE.md を置けますか？",
+      "audio": "audio/b112.mp3",
+      "duration_sec": 3.579,
+      "voice_style": "[問いかけるように]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572636"
+    },
+    {
+      "id": "b113",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "qa",
+      "text": "はい、可能です。ただし同じディレクトリには置けません。主な運用パターンは以下の通り：",
+      "audio": "audio/b113.mp3",
+      "duration_sec": 7.706,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572639"
+    },
+    {
+      "id": "b114",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "qa",
+      "text": "プロジェクトルートに 1 つ（起動時に自動読み込み）",
+      "audio": "audio/b114.mp3",
+      "duration_sec": 3.056,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572640"
+    },
+    {
+      "id": "b115",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "qa",
+      "text": "サブディレクトリにも置ける。ただし Anthropic のモノレポでの経験を踏まえ、すべて自動で読み込む仕様は廃止。現在は Claude が検索の過程で関連するサブディレクトリの CLAUDE.md を見つけた場合、必要に応じて読む",
+      "audio": "audio/b115.mp3",
+      "duration_sec": 15.203,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572646"
+    },
+    {
+      "id": "b116",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "qa",
+      "text": "ホームディレクトリに置けば、プロジェクト横断の永続指示になる",
+      "audio": "audio/b116.mp3",
+      "duration_sec": 4.519,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572648"
+    },
+    {
+      "id": "b117",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "qa",
+      "text": "@./path/to/other.md という @ 記法で、CLAUDE.md から他のファイルを明示的に読み込ませることもできる",
+      "audio": "audio/b117.mp3",
+      "duration_sec": 9.247,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572652"
+    },
+    {
+      "id": "b118",
+      "type": "narration",
+      "kind": "summary",
+      "chapter": "qa",
+      "text": "CLAUDE.md に書いても Claude が言うことを聞いてくれません（例：不要なインラインコメントを残す問題）",
+      "audio": "audio/b118.mp3",
+      "duration_sec": 6.687,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572655"
+    },
+    {
+      "id": "b119",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "qa",
+      "text": "それは主にモデル側の問題だった、というのが本音です。Claude 3.7 のプロンプトには「コメントを残すな」と強く書いていたにもかかわらず、モデルはコメントを残したがる傾向がありました。",
+      "audio": "audio/b119.mp3",
+      "duration_sec": 13.139,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572660"
+    },
+    {
+      "id": "b120",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "qa",
+      "text": "Claude 4 でここは大きく改善されています：",
+      "audio": "audio/b120.mp3",
+      "duration_sec": 3.291,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572661"
+    },
+    {
+      "id": "b121",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "qa",
+      "text": "デフォルト動作としてのコメント癖が抑制された",
+      "audio": "audio/b121.mp3",
+      "duration_sec": 3.213,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572662"
+    },
+    {
+      "id": "b122",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "qa",
+      "text": "指示追従能力全般が向上し、CLAUDE.md がはるかに忠実に守られるようになった",
+      "audio": "audio/b122.mp3",
+      "duration_sec": 5.982,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572665"
+    },
+    {
+      "id": "b123",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "qa",
+      "text": "モデルを移行するタイミングで、CLAUDE.md を見直すのがおすすめ。「もう書かなくてよくなった指示」と「新しく足すべき指示」の両方を整理できます。",
+      "audio": "audio/b123.mp3",
+      "duration_sec": 10.789,
+      "voice_style": "[優しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572669"
+    },
+    {
+      "id": "b124",
+      "type": "narration",
+      "kind": "summary",
+      "chapter": "qa",
+      "text": "複数エージェントでコンテキストを引き継ぐような運用はできますか？（エージェント 1 の文脈をエージェント 2, 3 が使う、など）",
+      "audio": "audio/b124.mp3",
+      "duration_sec": 9.012,
+      "voice_style": "[問いかけるように]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572672"
+    },
+    {
+      "id": "b125",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "qa",
+      "text": "Claude Code の設計哲学は「動く、いちばんシンプルなもの」——コーディングに強いエージェント 1 体ですべてをこなすことをまず追求しています。マルチエージェント・オーケストレーションは今後探求していくテーマです。",
+      "audio": "audio/b125.mp3",
+      "duration_sec": 12.539,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572678"
+    },
+    {
+      "id": "b126",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "qa",
+      "text": "今日できる現実的な回避策は、共有マークダウンファイルを使うこと：",
+      "audio": "audio/b126.mp3",
+      "duration_sec": 4.597,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572680"
+    },
+    {
+      "id": "b127",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "qa",
+      "text": "エージェント A に「次の開発者のために ticket.md に引き継ぎを書いて」と依頼",
+      "audio": "audio/b127.mp3",
+      "duration_sec": 4.911,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572682"
+    },
+    {
+      "id": "b128",
+      "type": "narration",
+      "kind": "li",
+      "chapter": "qa",
+      "text": "別窓で起動したエージェント B に「 ticket.md を読んで、ここからタスクを引き継いで」と指示",
+      "audio": "audio/b128.mp3",
+      "duration_sec": 5.721,
+      "voice_style": "[テンポ良く]",
+      "prosody": {
+        "speed": 1.2,
+        "volume": 0
+      },
+      "audio_version": "1776572684"
+    },
+    {
+      "id": "b129",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "qa",
+      "text": "状態をファイルに書き出し、モデルがそれを読む能力に素直に頼る——これが現時点で一番うまくいく方法です。将来的にはもっとネイティブな形で提供するかもしれません。",
+      "audio": "audio/b129.mp3",
+      "duration_sec": 11.259,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572688"
+    },
+    {
+      "id": "b130",
+      "type": "narration",
+      "kind": "h2",
+      "chapter": "checklist",
+      "text": "ベストプラクティス・チェックリスト",
+      "audio": "audio/b130.mp3",
+      "duration_sec": 1.933,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.05,
+        "volume": 0
+      },
+      "audio_version": "1776572689"
+    },
+    {
+      "id": "b131",
+      "type": "narration",
+      "kind": "p",
+      "chapter": "checklist",
+      "text": "今日から使える実践リスト。チェックできるたびに Claude Code との相性がひとつ良くなる。",
+      "audio": "audio/b131.mp3",
+      "duration_sec": 5.721,
+      "voice_style": "[明るく]",
+      "prosody": {
+        "speed": 1.15,
+        "volume": 0
+      },
+      "audio_version": "1776572692"
+    },
+    {
+      "id": "b132",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "checklist",
+      "text": "セットアップ編",
+      "audio": "audio/b132.mp3",
+      "duration_sec": 1.411,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572692"
+    },
+    {
+      "id": "b133",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "checklist",
+      "text": "ワークフロー編",
+      "audio": "audio/b133.mp3",
+      "duration_sec": 1.541,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572693"
+    },
+    {
+      "id": "b134",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "checklist",
+      "text": "コンテキスト管理編",
+      "audio": "audio/b134.mp3",
+      "duration_sec": 1.541,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572694"
+    },
+    {
+      "id": "b135",
+      "type": "narration",
+      "kind": "h3",
+      "chapter": "checklist",
+      "text": "応用編",
+      "audio": "audio/b135.mp3",
+      "duration_sec": 1.045,
+      "voice_style": "[楽しく]",
+      "prosody": {
+        "speed": 1.1,
+        "volume": 0
+      },
+      "audio_version": "1776572695"
+    },
+    {
+      "id": "p017",
+      "type": "piyo",
+      "kind": "piyo",
+      "chapter": "checklist",
+      "anchor": {
+        "mode": "after",
+        "ref": "b135"
+      },
+      "text": "ここまで聞いてくれて、ほんとうにありがとう！全部覚えようとしなくて大丈夫。ひとつでも「へえ、そんな道具あるんだ」って思えたら、今日はもうそれで大成功。じゃあまた次の回で、元気に会おうね。Piyofeed でした！",
+      "audio": "audio/p017.mp3",
+      "duration_sec": 13.557,
+      "voice_style": "[元気よく]",
+      "prosody": {
+        "speed": 1.18,
+        "volume": 0
+      },
+      "audio_version": "1776596321"
+    }
+  ],
+  "total_duration_sec": 1346.96,
+  "transition_audio": {
+    "opening": {
+      "audio": "audio/opening.mp3",
+      "text": "Claude Code ベストプラクティス。完全ガイド。",
+      "voice_style": "[期待を込めて]",
+      "audio_version": "1776596738"
+    },
+    "chapter_intro": {
+      "audio": "audio/chapter_intro.mp3",
+      "text": "はじめに。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_speaker": {
+      "audio": "audio/chapter_speaker.mp3",
+      "text": "第1章。話し手について。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_mental-model": {
+      "audio": "audio/chapter_mental-model.mp3",
+      "text": "第2章。Claude Code とは。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_under-hood": {
+      "audio": "audio/chapter_under-hood.mp3",
+      "text": "第3章。仕組みを覗く。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_use-cases": {
+      "audio": "audio/chapter_use-cases.mp3",
+      "text": "第4章。活用シーン。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_best-practices": {
+      "audio": "audio/chapter_best-practices.mp3",
+      "text": "第5章。ベストプラクティス。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_workflows": {
+      "audio": "audio/chapter_workflows.mp3",
+      "text": "第6章。効率的なワークフロー。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_advanced": {
+      "audio": "audio/chapter_advanced.mp3",
+      "text": "第7章。応用テクニック。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_whats-new": {
+      "audio": "audio/chapter_whats-new.mp3",
+      "text": "第8章。最新アップデート。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_qa": {
+      "audio": "audio/chapter_qa.mp3",
+      "text": "第9章。質疑応答。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    },
+    "chapter_checklist": {
+      "audio": "audio/chapter_checklist.mp3",
+      "text": "第10章。チェックリスト。",
+      "voice_style": "[印象的に]",
+      "audio_version": "1776596738"
+    }
+  }
+}

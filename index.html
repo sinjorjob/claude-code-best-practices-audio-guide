@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Claude Code ベストプラクティス — Anthropic Cal 氏による完全ガイド</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&amp;family=Noto+Sans+JP:wght@400;500;600;700&amp;family=Inter+Tight:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<link href="narrator.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="page">
+<!-- ========== SIDEBAR ========== -->
+<aside class="sidebar">
+<div class="brand">Claude Code</div>
+<div class="brand-sub">Best Practices Guide</div>
+<nav>
+<ul class="toc" id="toc">
+<li><a href="#intro"><span class="toc-num">00</span>はじめに</a></li>
+<li><a href="#speaker"><span class="toc-num">01</span>話し手について</a></li>
+<li><a href="#mental-model"><span class="toc-num">02</span>Claude Code とは</a></li>
+<li><a href="#under-hood"><span class="toc-num">03</span>仕組みを覗く</a></li>
+<li><a class="toc-sub" href="#agentic-search">├ エージェンティック検索</a></li>
+<li><a class="toc-sub" href="#permissions">└ 許可とセキュリティ</a></li>
+<li><a href="#use-cases"><span class="toc-num">04</span>活用シーン</a></li>
+<li><a href="#best-practices"><span class="toc-num">05</span>ベストプラクティス</a></li>
+<li><a class="toc-sub" href="#claude-md">├ CLAUDE.md</a></li>
+<li><a class="toc-sub" href="#perm-mgmt">├ 許可管理</a></li>
+<li><a class="toc-sub" href="#integrations">├ 統合とツール</a></li>
+<li><a class="toc-sub" href="#context-mgmt">└ コンテキスト管理</a></li>
+<li><a href="#workflows"><span class="toc-num">06</span>効率的なワークフロー</a></li>
+<li><a href="#advanced"><span class="toc-num">07</span>応用テクニック</a></li>
+<li><a href="#whats-new"><span class="toc-num">08</span>最新アップデート</a></li>
+<li><a href="#qa"><span class="toc-num">09</span>Q&amp;A</a></li>
+<li><a href="#checklist"><span class="toc-num">10</span>チェックリスト</a></li>
+</ul>
+</nav>
+</aside>
+<!-- ========== CONTENT ========== -->
+<main class="content">
+<!-- HEADER -->
+<header class="doc-header prose" id="intro">
+<div class="eyebrow">Anthropic · Conference Talk · 2025</div>
+<h1 data-narr-id="b001">Claude Code<br/>ベストプラクティス</h1>
+<p class="subtitle" data-narr-id="b002">Anthropic の Apply チーム、Cal 氏による公式トーク。<br/>Claude Code の仕組み、良い使いどころ、そして本当に効果のある使い方を、25 分にまとめた完全ガイド。</p>
+<div class="doc-meta">
+<div class="meta-item"><span class="meta-label">Speaker</span><span class="meta-value">Cal · Anthropic Applied AI</span></div>
+<div class="meta-item"><span class="meta-label">Format</span><span class="meta-value">トーク + Q&amp;A（約 25 分）</span></div>
+<div class="meta-item"><span class="meta-label">Audience</span><span class="meta-value">開発者・非エンジニアも歓迎</span></div>
+<div class="meta-item"><span class="meta-label">Reading time</span><span class="meta-value">約 15 分</span></div>
+</div>
+</header>
+<!-- CH1: Speaker -->
+<section class="chapter prose" id="speaker">
+<div class="chapter-header">
+<span class="chapter-num">Chapter 01</span>
+<h2 data-narr-id="b003">話し手について — なぜ Cal がここに立っているのか</h2>
+</div>
+<p class="lead" data-narr-id="b004">Cal 氏は約 1 年半前に Anthropic に入社し、<em>Applied（アプライ）チーム</em>を立ち上げた人物だ。チームのミッションは「顧客やパートナーが Claude の上で素晴らしいプロダクトを作るのを助けること」。日々の仕事のほとんどは、<strong>モデルから最高の出力を引き出すためにプロンプトを書くこと</strong>だという。</p>
+<p data-narr-id="b005">しかし Cal 氏はコードを書くのも好きだ。自分のことを「新しいプロジェクトを山ほど立ち上げるが、ほとんど完成させない、アイデア過多のコーダー」と笑って紹介する。書きかけのコードの「墓場」を抱えたエンジニアは世界中にいる。</p>
+<h3 data-narr-id="b006">金曜の夜、世界が変わった</h3>
+<p data-narr-id="b007">昨年の終わり頃、社内 Slack で「新しいツールがすごいらしい」という噂を聞きつけた Cal 氏は、ある金曜の夜にそれをダウンロードした。のちに <strong>Claude Code</strong> と呼ばれることになるツールだ。以前から温めていた新しいメモアプリのアイデアにぶつけてみた結果——</p>
+<blockquote data-narr-id="b008">
+        その週末、コーディングとソフトウェアエンジニアリングに対する考え方が、完全に変わった。
+        <cite>Cal</cite>
+</blockquote>
+<p data-narr-id="b009">ラップトップを抱えて週末中歩き回り、Enter キーを押してはブラウザを更新し、巨大で強力なアプリケーションが目の前で組み上がっていくのをただ眺めていた。一人では決して辿り着けなかったところまで辿り着いた——その体験に心を奪われた。</p>
+<div class="callout">
+<span class="callout-label">余談：社内リーダーボード事件</span>
+<p data-narr-id="b010">Cal 氏は「トークンを使いすぎて怒られるのでは」と心配していたが、当時 Claude Code チームは社内利用量のリーダーボードを作っていた。その週末、Cal 氏は堂々の 1 位に。これがきっかけでチームとつながり、プロンプトやツール設計、評価の仕事に関わるようになり、今や Claude Code のコアコントリビューターの一人となった。</p>
+</div>
+</section>
+<!-- CH2: Mental Model -->
+<section class="chapter prose" id="mental-model">
+<div class="chapter-header">
+<span class="chapter-num">Chapter 02</span>
+<h2 data-narr-id="b011">Claude Code とは — 頭の中のメンタルモデル</h2>
+</div>
+<p data-narr-id="b012">「Claude Code って結局何？」と聞かれたとき、Cal 氏はこう答える。</p>
+<div class="pullquote" data-narr-id="b013">
+        すべてをターミナルで完結させてしまう、あの同僚。<br/>GUI には決して触れない、ターミナルの魔法使い。
+        <span class="pullquote-attr">Cal による Claude Code のメンタルモデル</span>
+</div>
+<p data-narr-id="b014">Cal 氏は駆け出しエンジニア時代のメンターを思い出す。バグに詰まって机まで行くと、彼は自分のターミナルをぐるりとこちらに向け、狂ったような bash コマンドと vim の操作で、あれよあれよという間に問題を解決してしまう。こちらは「すごい…いつか覚えよう」と思いながら席に戻り、結局覚えずじまいで終わる——そんな経験だ。</p>
+<p data-narr-id="b015"><strong>Claude Code をパソコンに入れることは、そのターミナル魔法使いをいつでも隣に座らせておくことに等しい。</strong>呼べば即答してくれるトニーが、常時待機している状態である。</p>
+</section>
+<!-- CH3: Under the Hood -->
+<section class="chapter" id="under-hood">
+<div class="chapter-header prose">
+<span class="chapter-num">Chapter 03</span>
+<h2 data-narr-id="b016">仕組みを覗く — Claude Code はどう動いているのか</h2>
+</div>
+<div class="prose">
+<p class="lead" data-narr-id="b017">道具の仕組みを知っておくと、使い方はぐっとうまくなる。Anthropic の設計哲学は一貫してひとつ——<em>「動く、いちばんシンプルなもの」</em>を作ること。</p>
+<h3 data-narr-id="b018">Claude Code は「純粋なエージェント」である</h3>
+<p data-narr-id="b019">Anthropic では、<span class="def" title="目標を与えられた AI が、道具を使って自律的に行動するシステム">エージェント</span>とは次のものを指す：</p>
+<ul>
+<li data-narr-id="b020"><strong>指示</strong>（どう振る舞うべきかのプロンプト）</li>
+<li data-narr-id="b021"><strong>強力なツール</strong>（ファイル編集、ターミナル、等）</li>
+<li data-narr-id="b022"><strong>ループ</strong>（モデル自身が「終わった」と判断するまで回り続ける）</li>
+</ul>
+<p data-narr-id="b023">Claude Code はまさにこの定義の素直な実装だ。「ターミナルが得意な人ならこれらを使うだろう」というツール——<strong>ファイルの読み書き、ターミナル実行、さらに MCP 経由で拡張される外部ツール</strong>——を、モデルに渡して自由に使わせる。</p>
+</div>
+<!-- DIAGRAM: Agent Loop -->
+<div class="diagram">
+<svg style="width:100%;height:auto;max-width:720px;display:block;margin:0 auto;" viewbox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arr" markerheight="7" markerwidth="7" orient="auto" refx="9" refy="5" viewbox="0 0 10 10">
+<path d="M0,0 L10,5 L0,10 z" fill="var(--terracotta)"></path>
+</marker>
+</defs>
+<!-- User -->
+<g>
+<rect fill="var(--bg)" height="60" rx="8" stroke="var(--rule-strong)" stroke-width="1.5" width="120" x="20" y="130"></rect>
+<text fill="var(--ink)" font-family="var(--jp-serif)" font-size="14" font-weight="600" text-anchor="middle" x="80" y="155">ユーザー</text>
+<text fill="var(--muted)" font-family="var(--sans)" font-size="11" text-anchor="middle" x="80" y="175">プロンプト入力</text>
+</g>
+<!-- Arrow 1 -->
+<path d="M140 160 L195 160" fill="none" marker-end="url(#arr)" stroke="var(--terracotta)" stroke-width="1.5"></path>
+<!-- Model (center) -->
+<g>
+<circle cx="360" cy="160" fill="var(--paper)" r="80" stroke="var(--terracotta)" stroke-width="2"></circle>
+<text fill="var(--ink)" font-family="var(--jp-serif)" font-size="18" font-weight="600" text-anchor="middle" x="360" y="150">Claude</text>
+<text fill="var(--muted)" font-family="var(--sans)" font-size="11" text-anchor="middle" x="360" y="170">思考・計画・判断</text>
+<text fill="var(--terracotta)" font-family="var(--mono)" font-size="10" text-anchor="middle" x="360" y="188">loop until done</text>
+</g>
+<!-- Loop arrow -->
+<path d="M 440 125 A 100 80 0 0 1 440 195" fill="none" stroke="var(--terracotta)" stroke-dasharray="4 3" stroke-width="1.5"></path>
+<!-- Tools (right) -->
+<g>
+<rect fill="var(--cream)" height="44" rx="6" stroke="var(--rule)" stroke-width="1" width="140" x="560" y="40"></rect>
+<text fill="var(--ink-2)" font-family="var(--mono)" font-size="11" font-weight="600" text-anchor="middle" x="630" y="60">Read / Write</text>
+<text fill="var(--muted)" font-family="var(--sans)" font-size="10" text-anchor="middle" x="630" y="75">ファイル操作</text>
+<rect fill="var(--cream)" height="44" rx="6" stroke="var(--rule)" stroke-width="1" width="140" x="560" y="95"></rect>
+<text fill="var(--ink-2)" font-family="var(--mono)" font-size="11" font-weight="600" text-anchor="middle" x="630" y="115">Bash</text>
+<text fill="var(--muted)" font-family="var(--sans)" font-size="10" text-anchor="middle" x="630" y="130">ターミナル実行</text>
+<rect fill="var(--cream)" height="44" rx="6" stroke="var(--rule)" stroke-width="1" width="140" x="560" y="150"></rect>
+<text fill="var(--ink-2)" font-family="var(--mono)" font-size="11" font-weight="600" text-anchor="middle" x="630" y="170">Glob / Grep</text>
+<text fill="var(--muted)" font-family="var(--sans)" font-size="10" text-anchor="middle" x="630" y="185">検索</text>
+<rect fill="var(--cream)" height="44" rx="6" stroke="var(--rule)" stroke-width="1" width="140" x="560" y="205"></rect>
+<text fill="var(--ink-2)" font-family="var(--mono)" font-size="11" font-weight="600" text-anchor="middle" x="630" y="225">MCP Servers</text>
+<text fill="var(--muted)" font-family="var(--sans)" font-size="10" text-anchor="middle" x="630" y="240">外部ツール拡張</text>
+</g>
+<!-- Arrows to tools -->
+<path d="M 440 130 L 555 62" fill="none" marker-end="url(#arr)" stroke="var(--rule-strong)" stroke-width="1"></path>
+<path d="M 440 150 L 555 117" fill="none" marker-end="url(#arr)" stroke="var(--rule-strong)" stroke-width="1"></path>
+<path d="M 440 170 L 555 172" fill="none" marker-end="url(#arr)" stroke="var(--rule-strong)" stroke-width="1"></path>
+<path d="M 440 190 L 555 227" fill="none" marker-end="url(#arr)" stroke="var(--rule-strong)" stroke-width="1"></path>
+</svg>
+<div class="diagram-caption">図 1 — Claude Code は「道具を持ったエージェント」。モデルは自分で考え、ツールを呼び、結果を見てまた考える、というループを回す。</div>
+</div>
+<div class="prose">
+<h3 data-narr-id="b024" id="agentic-search">コードベースの理解 — 索引せず、探検する</h3>
+<p data-narr-id="b025">1 年前にコーディングエージェントを設計するなら、こう考えただろう：「コードベース全体をインデックス化して、ベクトル埋め込みで RAG 検索を…」。</p>
+<p data-narr-id="b026"><strong>Claude Code はそれをしない。</strong>インデックスは作らない。</p>
+<p data-narr-id="b027">代わりに、新しいチームに入った開発者が実際にやるのと同じ方法で、コードベースを<em>探検する</em>。<span class="def" title="モデルが検索→結果の解釈→追加検索、を繰り返すこと">エージェンティック検索</span>と呼ばれる手法だ。</p>
+<div class="feat-grid">
+<div class="feat-card" data-narr-id="b028">
+<div class="feat-num">TOOL 01</div>
+<h4>glob</h4>
+<p>パターンマッチで関連ファイルを一気に絞り込む</p>
+</div>
+<div class="feat-card" data-narr-id="b029">
+<div class="feat-num">TOOL 02</div>
+<h4>grep</h4>
+<p>中身を読まずに「使っている場所」を見つける</p>
+</div>
+<div class="feat-card" data-narr-id="b030">
+<div class="feat-num">TOOL 03</div>
+<h4>find / read</h4>
+<p>必要なファイルだけを狙って読む</p>
+</div>
+</div>
+<p data-narr-id="b031">モデルは何度か検索し、結果を眺め、「もう少し何かを確認する必要がありそうだ」と判断したら、また検索する。これを繰り返すうちに、コードベースの地図が頭の中に組み上がっていく。<strong>人間の開発者と同じやり方</strong>だ。</p>
+<h3 data-narr-id="b032" id="permissions">周辺レイヤー — UI、許可、セキュリティ</h3>
+<p data-narr-id="b033">エージェント本体の周りには、いくつかの薄い層が乗っている：</p>
+<ul>
+<li data-narr-id="b034"><strong>軽量な UI</strong>：Claude が何をしているかリアルタイムで見える</li>
+<li data-narr-id="b035"><strong>許可システム</strong>：危険な操作の前で必ず人間に確認を取る</li>
+<li data-narr-id="b036"><strong>セキュリティ重視の設計</strong>：Anthropic API だけでなく AWS（Bedrock）や GCP（Vertex AI）にも向けられる。自分のインフラで Claude を使いたい組織でもそのまま動く</li>
+</ul>
+</div>
+</section>
+<!-- CH4: Use Cases -->
+<section class="chapter prose" id="use-cases">
+<div class="chapter-header">
+<span class="chapter-num">Chapter 04</span>
+<h2 data-narr-id="b037">活用シーン — 結局、何に使えばいいのか</h2>
+</div>
+<p class="lead" data-narr-id="b038">「Claude Code って何に向いているの？」とよく聞かれる。率直な答えは、<em>大体なんでも得意</em>。ただし、輝く場面は確かにある。</p>
+<ol class="steps">
+<li data-narr-id="b039">
+<h4>ディスカバリーとオンボーディング</h4>
+<p>新しいコードベースに放り込まれた最初の数日、人は最も非生産的になる。Claude に「この機能はどこに実装されてる？」「このファイルの Git 履歴を見て、過去数週間でどう変わったか物語風に説明して」と聞けば、立ち上がりが一気に早くなる。</p>
+</li>
+<li data-narr-id="b040">
+<h4>思考のパートナーとして使う（過小評価されている使い方）</h4>
+<p>いきなり実装させるのではなく、まずはこう頼むといい：「この機能を実装したい。コードベースを調べて、2〜3 の実装方針を報告して。まだコードは書かないで」。返ってきた方針を吟味してから、合意できた方向で着手する。</p>
+</li>
+<li data-narr-id="b041">
+<h4>ゼロからの構築</h4>
+<p>空のディレクトリに「ゲームを作って」「アプリを作って」——デモ映えする使い方。とても楽しく、気持ちがいい。</p>
+</li>
+<li data-narr-id="b042">
+<h4>既存コードベースでの開発（こちらが本丸）</h4>
+<p>現実に重要なのはこちら。Claude Code チーム自身のコードベースでは <strong>ユニットテストのカバレッジが異常に高い</strong>——テストを書くのが驚くほど簡単だからだ。コミットメッセージや PR の説明も整っている。「コミットして」「PR メッセージ書いて」と言うだけでいい。</p>
+</li>
+<li data-narr-id="b043">
+<h4>軽量なデプロイ・ライフサイクル自動化</h4>
+<p>Claude Code には <strong>SDK</strong>（ヘッドレス利用、プログラマブル利用）がある。CI/CD に組み込む、GitHub Actions から呼び出す——コーディングエージェントを好きな場所に振りかけられる。</p>
+</li>
+<li data-narr-id="b044">
+<h4>サポートと大規模リファクタ</h4>
+<p>顧客の中には「古い Java から新しい Java へ」「PHP から React / Angular へ」といった、長年先延ばしにしてきた大規模移行を抱えるチームが多かった。Claude Code があると、こうしたプロジェクトが<strong>「一ヶ月リファクタに使います」とチームに切り出せる程度にまで消化しやすくなる</strong>。</p>
+</li>
+</ol>
+<div class="callout tip">
+<span class="callout-label">忘れないで：ターミナルの達人である</span>
+<p data-narr-id="b045">Claude Code は <code>git</code>、<code>docker</code>、<code>bq</code>（BigQuery）など、あらゆる CLI を使いこなせる。たとえば「厄介な rebase から抜け出せない」ような状況でも、状況を説明して「直して」と頼むだけで、するりと抜け出してくれる。<em>CLI があるところ、Claude Code の出番がある。</em></p>
+</div>
+</section>
+<!-- CH5: Best Practices -->
+<section class="chapter" id="best-practices">
+<div class="chapter-header prose">
+<span class="chapter-num">Chapter 05</span>
+<h2 data-narr-id="b046">ベストプラクティス — 本当に効くやり方</h2>
+</div>
+<div class="prose">
+<h3 data-narr-id="b047" id="claude-md">1. CLAUDE.md ファイルを使う</h3>
+<p data-narr-id="b048">Claude Code はエージェントだが、<strong>記憶を持たない</strong>。セッションをまたいで、あるいはチーム間で「このコードベースの文脈」を共有する主な方法が、<code>CLAUDE.md</code> というファイルだ。</p>
+<p data-narr-id="b049">起動時に作業ディレクトリに <code>CLAUDE.md</code> があれば、その内容はプロンプトに差し込まれる。メッセージとしては次のような扱いだ：「開発者が残してくれた重要な指示です。よく読んでください。」</p>
+</div>
+<div class="terminal">
+<div class="term-header">
+<span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span>
+<span class="term-title">CLAUDE.md</span>
+</div>
+<pre style="margin:0;white-space:pre-wrap;"><span class="comment"># このプロジェクトについて</span>
+
+<span class="hl">## テストの実行方法</span>
+<span class="output">npm run test        # 全テスト</span>
+<span class="output">npm run test:unit   # ユニットテストのみ</span>
+
+<span class="hl">## ディレクトリ構成</span>
+<span class="output">- src/    : アプリケーション本体</span>
+<span class="output">- tests/  : ユニット / 統合テスト</span>
+<span class="output">- scripts/: 運用スクリプト</span>
+
+<span class="hl">## スタイルガイド</span>
+<span class="output">- インラインコメントは残さない（self-explanatory なコードを優先）</span>
+<span class="output">- TypeScript strict mode を保つ</span>
+
+<span class="hl">## 社内ツール</span>
+<span class="output">- `koo` コマンド：デプロイとログ閲覧用の社内 CLI</span>
+
+<span class="comment"># 他の claude.md を参照する（@ 記法）</span>
+<span class="hl">@./packages/api/CLAUDE.md</span></pre>
+</div>
+<div class="prose">
+<h4 data-narr-id="b050">どこに置くか</h4>
+<ul>
+<li data-narr-id="b051"><strong>プロジェクトにチェックインする</strong>（チーム全員で共有）</li>
+<li data-narr-id="b052"><strong>ホームディレクトリに置く</strong>（プロジェクトによらず、常に Claude に知っておいてほしいこと）</li>
+<li data-narr-id="b053"><strong>サブディレクトリに置く</strong>（モノレポの場合、関連するときだけ Claude が自動で読み込む）</li>
+</ul>
+<div class="callout warn">
+<span class="callout-label">アップデート情報：Claude 4 で指示追従が向上</span>
+<p data-narr-id="b054">過去の Claude（3.7 等）は、CLAUDE.md に「コメントを残すな」と書いても、なぜかコメントを残したがる性質があった。Claude 4 ではここが大きく改善されている。<strong>新モデルに移行するタイミングで、CLAUDE.md を見直してみるといい</strong>——不要になった指示があるかもしれないし、新たに加えるべきことも出てくるはずだ。</p>
+</div>
+<h3 data-narr-id="b055" id="perm-mgmt">2. 許可（パーミッション）を賢く管理する</h3>
+<p data-narr-id="b056">デフォルトでは、Claude Code は<strong>読み取り系（検索・ファイル閲覧）は自由にやらせる</strong>。しかし書き込みやシェルコマンドのように、マシンに影響を与えるものに入ると、承認 UI が立ち上がる：「はい」「常に許可」「別のやり方をさせる」。</p>
+<div class="feat-grid">
+<div class="feat-card" data-narr-id="b057">
+<div class="feat-num">SHORTCUT</div>
+<h4>Shift + Tab</h4>
+<p>auto-accept モード。Claude が確認なしで走り続ける</p>
+</div>
+<div class="feat-card" data-narr-id="b058">
+<div class="feat-num">CONFIG</div>
+<h4>常に許可リスト</h4>
+<p>例：<code>npm run test</code> は毎回 Yes を押したくない。設定で自動許可に</p>
+</div>
+<div class="feat-card" data-narr-id="b059">
+<div class="feat-num">ESCAPE</div>
+<h4>Escape キー</h4>
+<p>暴走を感じたら即停止。割り込んで軌道修正できる</p>
+</div>
+</div>
+<h3 data-narr-id="b060" id="integrations">3. 統合とツールの整備</h3>
+<p data-narr-id="b061">Claude Code の真価は、ターミナル上の CLI を<strong>どれだけ渡せるか</strong>にかかっている。良い出発点：</p>
+<ul>
+<li data-narr-id="b062"><code>gh</code>（GitHub CLI） — PR、Issue、Actions まで操作できる</li>
+<li data-narr-id="b063">Docker、kubectl、AWS CLI、Terraform — いつもの運用ツール</li>
+<li data-narr-id="b064"><strong>社内ツール</strong>（Anthropic では <code>koo</code>）— 自社の CLI は CLAUDE.md に書いておく</li>
+</ul>
+<div class="callout">
+<span class="callout-label">CLI vs MCP — どちらを選ぶべきか</span>
+<p data-narr-id="b065">よく使われていて文書も豊富な CLI ツールなら、<strong>まず CLI をインストールする</strong>のが無難。MCP サーバー経由で機能を足すのは、CLI では届かない領域に踏み込むときの選択肢として考えるといい。</p>
+</div>
+<h3 data-narr-id="b066" id="context-mgmt">4. コンテキスト管理 — 200K トークンと上手に付き合う</h3>
+<p data-narr-id="b067">Anthropic のモデルは <strong>200,000 トークン</strong>という広大なコンテキストウィンドウを持つ。とはいえ、ツール呼び出しの結果が積み上がれば、いつかは上限にぶつかる。Claude Code は右下に「そろそろ埋まるよ」と警告を出してくれる。そのとき取れる手段は 2 つ：</p>
+<div class="feat-grid">
+<div class="feat-card" data-narr-id="b068">
+<div class="feat-num">/clear</div>
+<h4>まっさらにして再開</h4>
+<p>履歴を消して CLAUDE.md だけ残す。話題が変わったときに最適。</p>
+</div>
+<div class="feat-card" data-narr-id="b069">
+<div class="feat-num">/compact</div>
+<h4>要約して引き継ぐ</h4>
+<p>「別の開発者に引き継ぐつもりで、今までの作業を要約して」とクロードに依頼し、その要約を種に次のセッションを始める。仕事の継続が必要なときに。</p>
+</div>
+</div>
+<p class="lead" data-narr-id="b070">Claude Code チームは <em>/compact</em> の挙動を特に丁寧にチューニングしている。コンテキストを使い切っても、compact → そのまま続行、という流れが成立するように。</p>
+</div>
+</section>
+<!-- CH6: Workflows -->
+<section class="chapter prose" id="workflows">
+<div class="chapter-header">
+<span class="chapter-num">Chapter 06</span>
+<h2 data-narr-id="b071">効率的なワークフロー</h2>
+</div>
+<h3 data-narr-id="b072">プランニングと To-Do リストを使う</h3>
+<p data-narr-id="b073">最高のやり方のひとつは——<strong>いきなり「バグを直して」と言わないこと</strong>。代わりにこう頼む：</p>
+<div class="callout">
+<p data-narr-id="b074">「このバグがある。コードベースを調べて、原因を特定して、どう直すつもりかプランを教えて。」</p>
+</div>
+<p data-narr-id="b075">プランを読めば、Claude がこれからやろうとしていることを事前に検証できる。<strong>時間を大幅に節約できる</strong>。</p>
+<p data-narr-id="b076">大きめのタスクでは、Claude が自分で To-Do リストを作る。作業を横目で見ながら、リストに変な項目や意図からずれたものが混じっていたら、<strong>Escape で止めて「このリスト、変えたい。方向が違うと思う」と介入する</strong>——これが理想的な関わり方だ。</p>
+<h3 data-narr-id="b077">賢い「バイブコーディング」</h3>
+<p data-narr-id="b078">Claude に任せて Enter を押し、結果を待つ——楽しいし強力だが、落とし穴もある。以下を守ると大外れが減る：</p>
+<ul>
+<li data-narr-id="b079"><strong>テスト駆動で</strong>：小さな変更 → テスト実行 → 通る、を繰り返させる</li>
+<li data-narr-id="b080"><strong>常に TypeScript と Lint をチェック</strong>させる</li>
+<li data-narr-id="b081"><strong>こまめにコミット</strong>する。暴走したら git で戻ればいい</li>
+</ul>
+<h3 data-narr-id="b082">スクリーンショットでガイド・デバッグ</h3>
+<p data-narr-id="b083">Claude のモデルはマルチモーダルだ。画像を貼り付けるか、プロジェクト内のファイルを指して「この <code>mock.png</code> を見てウェブサイトを作って」と言うだけでいい。UI のバグ報告にも有効——スクショを渡して「この見え方を直して」で話が通じる。</p>
+</section>
+<!-- CH7: Advanced -->
+<section class="chapter prose" id="advanced">
+<div class="chapter-header">
+<span class="chapter-num">Chapter 07</span>
+<h2 data-narr-id="b084">応用テクニック — 次のレベルへ</h2>
+</div>
+<h3 data-narr-id="b085">複数の Claude を同時に走らせる</h3>
+<p data-narr-id="b086">使いこなしてくると、どうしても<strong>複数の Claude を並列で動かしたくなる</strong>。Anthropic 社内にも、顧客の中にも、<em>同時に 4 つの Claude を回している</em>人たちがいる。tmux、別タブ、別ワークツリー——手段はさまざま。</p>
+<blockquote data-narr-id="b087">
+        自分は 2 つが精一杯。でも 4 つ同時に走らせる人を知っている。挑戦してみて。
+        <cite>Cal</cite>
+</blockquote>
+<h3 data-narr-id="b088">Escape は最高の友達</h3>
+<p data-narr-id="b089">Claude が作業している間、常に見ていて、違うと思った瞬間 Escape で止める——これは使いこなしの肝だ。<strong>いつ止めるべきか、いつ任せるべきか</strong>の嗅覚が、生産性を決める。</p>
+<div class="callout tip">
+<span class="callout-label">隠れ機能：Escape を 2 回押す</span>
+<p data-narr-id="b090">Escape を 2 回押すと、<strong>会話の途中まで戻れる</strong>。分岐点までジャンプしてやり直せる、知る人ぞ知る機能。</p>
+</div>
+<h3 data-narr-id="b091">ツール拡張と MCP</h3>
+<p data-narr-id="b092">Bash と標準ツールだけでは届かない領域に行きたくなったら、<strong>MCP サーバー</strong>を検討するタイミング。社内データベース、ナレッジベース、専用 SaaS——自社固有の知識源を Claude に繋ぐ手段として有効。</p>
+<h3 data-narr-id="b093">ヘッドレス自動化</h3>
+<p data-narr-id="b094">Anthropic がいま最も興奮している領域であり、同時にまだ手探りしている領域でもある。<strong>プログラムから Claude をどう使うか？</strong></p>
+<ul>
+<li data-narr-id="b095">GitHub Actions に Claude Code を組み込む</li>
+<li data-narr-id="b096">CI/CD パイプラインから呼び出す</li>
+<li data-narr-id="b097">テスト実行後の自動修正、ログ解析、レビュー補助…</li>
+</ul>
+<p class="lead" data-narr-id="b098"><em>「みなさんにも、この方向を一緒に探してほしい」——Cal</em></p>
+</section>
+<!-- CH8: What's New -->
+<section class="chapter prose" id="whats-new">
+<div class="chapter-header">
+<span class="chapter-num">Chapter 08</span>
+<h2 data-narr-id="b099">最新アップデート — 追いつき続けるために</h2>
+</div>
+<p data-narr-id="b100">Claude Code は出荷速度が異常に速い。Cal 氏自身が「自分でもついていけない」と笑う。プレゼン当日時点で新しかったものを一部紹介する。</p>
+<h3 data-narr-id="b101">モデル切り替え：/model と /config</h3>
+<p data-narr-id="b102">起動後に <code>/model</code> を打つと、現在どのモデルで動いているかわかる。デフォルト（Sonnet）から <strong>Opus</strong> へ切り替えることも、<code>/config</code> からも同じ操作ができる。用途に合ったモデルを選び直せる。</p>
+<div class="terminal">
+<div class="term-header">
+<span class="term-dot red"></span><span class="term-dot yellow"></span><span class="term-dot green"></span>
+<span class="term-title">claude code — model switch</span>
+</div>
+<pre style="margin:0;">
+<span class="prompt">&gt;</span> /model
+  <span class="output">現在のモデル: Claude Sonnet (default)</span>
+  <span class="comment">↓ を押して切り替え</span>
+  <span class="ok">→ Claude Opus</span>
+    Claude Sonnet</pre>
+</div>
+<h3 data-narr-id="b103">ツール呼び出しの「あいだ」で考える</h3>
+<p data-narr-id="b104">以前から <code>think hard</code> や拡張思考（Extended Thinking）はあったが、過去のモデルでは<strong>ツール呼び出しの間では思考させていなかった</strong>——本当に考えたい瞬間は、まさにそこなのに、だ。</p>
+<p data-narr-id="b105"><strong>Claude 4 からは、ツール呼び出しの間でも思考する</strong>。画面では薄いグレーのテキストで思考が流れ、ファイルを読んでまた考え、次の行動を決める。バグ解決や複雑なタスクでは <code>think hard</code> を一言添えるといい。</p>
+<div class="callout tip">
+<span class="callout-label">Pro Tip</span>
+<p data-narr-id="b106"><em>難しいタスクを頼むときは、プロンプトに「think hard」や「ultrathink」を入れる。</em>Claude 4 はツール呼び出しの合間にも深く考えてくれるので、効き目が段違い。</p>
+</div>
+<h3 data-narr-id="b107">VS Code / JetBrains 統合の強化</h3>
+<p data-narr-id="b108">エディタとの統合が新しくなり、Claude は<strong>いま開いているファイルが何か</strong>を自動で認識する。「この file を〜して」と曖昧な指示でも、コンテキストを拾ってくれる。</p>
+<h3 data-narr-id="b109">追いつき方</h3>
+<p data-narr-id="b110">GitHub の <code>anthropic/claude-code</code> を見ると、Issue 報告も、<strong>チェンジログも公開されている</strong>。Cal 氏も週に一度はここを眺めて、新機能を把握するようにしているそうだ。</p>
+</section>
+<!-- CH9: Q&A -->
+<section class="chapter prose" id="qa">
+<div class="chapter-header">
+<span class="chapter-num">Chapter 09</span>
+<h2 data-narr-id="b111">Q&amp;A — 会場からの質問</h2>
+</div>
+<details class="qa" open="">
+<summary data-narr-id="b112">プロジェクト内に複数の CLAUDE.md を置けますか？</summary>
+<div class="qa-body">
+<p data-narr-id="b113">はい、可能です。ただし<strong>同じディレクトリには置けません</strong>。主な運用パターンは以下の通り：</p>
+<ul>
+<li data-narr-id="b114"><strong>プロジェクトルート</strong>に 1 つ（起動時に自動読み込み）</li>
+<li data-narr-id="b115"><strong>サブディレクトリ</strong>にも置ける。ただし Anthropic のモノレポでの経験を踏まえ、<em>すべて自動で読み込む仕様は廃止</em>。現在は Claude が検索の過程で関連するサブディレクトリの CLAUDE.md を見つけた場合、必要に応じて読む</li>
+<li data-narr-id="b116"><strong>ホームディレクトリ</strong>に置けば、プロジェクト横断の永続指示になる</li>
+<li data-narr-id="b117"><code>@./path/to/other.md</code> という <strong>@ 記法</strong>で、CLAUDE.md から他のファイルを明示的に読み込ませることもできる</li>
+</ul>
+</div>
+</details>
+<details class="qa">
+<summary data-narr-id="b118">CLAUDE.md に書いても Claude が言うことを聞いてくれません（例：不要なインラインコメントを残す問題）</summary>
+<div class="qa-body">
+<p data-narr-id="b119">それは<strong>主にモデル側の問題</strong>だった、というのが本音です。Claude 3.7 のプロンプトには「コメントを残すな」と強く書いていたにもかかわらず、モデルはコメントを残したがる傾向がありました。</p>
+<p data-narr-id="b120"><strong>Claude 4 でここは大きく改善</strong>されています：</p>
+<ul>
+<li data-narr-id="b121">デフォルト動作としてのコメント癖が抑制された</li>
+<li data-narr-id="b122">指示追従能力全般が向上し、CLAUDE.md が<em>はるかに忠実に</em>守られるようになった</li>
+</ul>
+<p data-narr-id="b123">モデルを移行するタイミングで、CLAUDE.md を見直すのがおすすめ。「もう書かなくてよくなった指示」と「新しく足すべき指示」の両方を整理できます。</p>
+</div>
+</details>
+<details class="qa">
+<summary data-narr-id="b124">複数エージェントでコンテキストを引き継ぐような運用はできますか？（エージェント 1 の文脈をエージェント 2, 3 が使う、など）</summary>
+<div class="qa-body">
+<p data-narr-id="b125">Claude Code の設計哲学は「動く、いちばんシンプルなもの」——<strong>コーディングに強いエージェント 1 体ですべてをこなす</strong>ことをまず追求しています。マルチエージェント・オーケストレーションは今後探求していくテーマです。</p>
+<p data-narr-id="b126">今日できる現実的な回避策は、<strong>共有マークダウンファイルを使うこと</strong>：</p>
+<ul>
+<li data-narr-id="b127">エージェント A に「次の開発者のために <code>ticket.md</code> に引き継ぎを書いて」と依頼</li>
+<li data-narr-id="b128">別窓で起動したエージェント B に「<code>ticket.md</code> を読んで、ここからタスクを引き継いで」と指示</li>
+</ul>
+<p data-narr-id="b129"><em>状態をファイルに書き出し、モデルがそれを読む能力に素直に頼る</em>——これが現時点で一番うまくいく方法です。将来的にはもっとネイティブな形で提供するかもしれません。</p>
+</div>
+</details>
+</section>
+<!-- CH10: CHECKLIST -->
+<section class="chapter prose" id="checklist">
+<div class="chapter-header">
+<span class="chapter-num">Chapter 10</span>
+<h2 data-narr-id="b130">ベストプラクティス・チェックリスト</h2>
+</div>
+<p data-narr-id="b131">今日から使える実践リスト。チェックできるたびに Claude Code との相性がひとつ良くなる。</p>
+<div class="checklist">
+<h3 data-narr-id="b132">セットアップ編</h3>
+<div class="checklist-group">
+<div class="checklist-group-title">プロジェクトごとに整える</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text"><strong>CLAUDE.md をプロジェクトルートに用意</strong>し、チェックインする</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">テスト実行コマンド、ディレクトリ構成、スタイルガイドを CLAUDE.md に書く</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">社内 CLI ツールの使い方を CLAUDE.md に記述</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">ホームディレクトリの CLAUDE.md に、個人的な好み（言語、スタイル）を置く</span></label>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">統合ツール</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text"><code>gh</code>（GitHub CLI）をインストール・ログイン</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">よく使う CLI（Docker、kubectl、AWS CLI 等）を手元に揃える</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">CLI で足りない範囲だけ MCP サーバーを足す</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">VS Code / JetBrains 拡張を導入しておく</span></label>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">許可管理</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">安全なコマンド（<code>npm test</code>、<code>tsc</code> 等）は<strong>常に許可</strong>に設定</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">Shift + Tab の auto-accept モードを把握</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">危険なコマンド（<code>rm -rf</code>、本番デプロイ等）は自動許可しない</span></label>
+</div>
+</div>
+<div class="checklist">
+<h3 data-narr-id="b133">ワークフロー編</h3>
+<div class="checklist-group">
+<div class="checklist-group-title">タスクの始め方</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">いきなり実装させず、<strong>まず「プランを教えて」</strong>と頼む</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">難しい問題には <code>think hard</code> / <code>ultrathink</code> を添える</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">ゴールが画像で伝わるならスクリーンショットを渡す</span></label>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">作業中</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">To-Do リストを眺め、違和感があれば Escape で介入</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">テスト駆動で進ませる（小変更 → テスト → 確認）</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">TypeScript / Lint を毎ステップ走らせる</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text"><strong>こまめにコミット</strong>して、暴走したら戻れる状態を保つ</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">Escape 2 回で分岐点まで戻れることを覚えておく</span></label>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">仕上げ</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">「コミットメッセージを書いて」「PR 説明を書いて」と Claude に任せる</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">ユニットテストを追加してもらう（追加コスト小、効果大）</span></label>
+</div>
+</div>
+<div class="checklist">
+<h3 data-narr-id="b134">コンテキスト管理編</h3>
+<div class="checklist-group">
+<div class="checklist-group-title">200K を使い切ったら</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">話題が変わるときは <code>/clear</code>（CLAUDE.md だけ残して再スタート）</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">作業を継続したいなら <code>/compact</code>（要約して引き継ぐ）</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">長時間セッションでは右下の残量表示を気にする習慣を</span></label>
+</div>
+</div>
+<div class="checklist">
+<h3 data-narr-id="b135">応用編</h3>
+<div class="checklist-group">
+<div class="checklist-group-title">レベルアップ</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text"><strong>Claude を 2〜4 個並列で走らせる</strong>（tmux、別タブ、別ワークツリー）</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">エージェント間の引き継ぎは共有 markdown（<code>ticket.md</code>）で行う</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">Claude Code SDK でヘッドレス自動化を試す</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text">GitHub Actions に組み込んで自動レビュー / 自動修正を試す</span></label>
+</div>
+<div class="checklist-group">
+<div class="checklist-group-title">追いつき続ける</div>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text"><a href="https://github.com/anthropics/claude-code" target="_blank">anthropic/claude-code</a> のチェンジログを週 1 回チェック</span></label>
+<label class="check-item"><input type="checkbox"/><span class="box"></span><span class="text"><code>/model</code> で時々モデルを切り替えてみる（Sonnet ⇄ Opus）</span></label>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="doc-footer">
+<div class="mark">◆</div>
+<p>
+        Based on "Claude Code: Best Practices" talk by <strong>Cal</strong>, Anthropic Applied AI team.<br/>
+        このガイドはトーク内容を元に構成した、非公式日本語完全版です。
+      </p>
+</footer>
+</main>
+</div>
+<!-- TWEAKS PANEL -->
+<div class="tweaks-panel" id="tweaks">
+<button class="active" data-theme-btn="light">☀ Light</button>
+<button data-theme-btn="dark">☾ Dark</button>
+</div>
+<!-- EDITMODE config (for Tweaks persistence) -->
+<script>
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "dark"
+}/*EDITMODE-END*/;
+</script>
+<script>
+/* ============ Theme ============ */
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.querySelectorAll('[data-theme-btn]').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-theme-btn') === t);
+  });
+  try { localStorage.setItem('cc-theme', t); } catch(e) {}
+}
+document.querySelectorAll('[data-theme-btn]').forEach(b => {
+  b.addEventListener('click', () => {
+    const t = b.getAttribute('data-theme-btn');
+    setTheme(t);
+    window.parent?.postMessage({type: '__edit_mode_set_keys', edits: {theme: t}}, '*');
+  });
+});
+
+/* load saved theme */
+try {
+  const saved = localStorage.getItem('cc-theme');
+  if (saved) setTheme(saved);
+  else setTheme(TWEAK_DEFAULTS.theme || 'light');
+} catch(e) { setTheme('light'); }
+
+/* ============ Tweaks host handshake ============ */
+window.addEventListener('message', (e) => {
+  const d = e.data || {};
+  if (d.type === '__activate_edit_mode') document.getElementById('tweaks').classList.add('active');
+  if (d.type === '__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('active');
+});
+window.parent?.postMessage({type: '__edit_mode_available'}, '*');
+
+/* ============ Scroll spy for TOC ============ */
+const tocLinks = document.querySelectorAll('#toc a');
+const sections = Array.from(tocLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+function onScroll() {
+  const y = window.scrollY + 120;
+  let active = sections[0];
+  for (const s of sections) {
+    if (s.offsetTop <= y) active = s;
+  }
+  tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active.id));
+  // progress bar
+  const total = document.body.scrollHeight - window.innerHeight;
+  const pct = Math.min(100, Math.max(0, (window.scrollY / total) * 100));
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+window.addEventListener('scroll', onScroll, {passive: true});
+onScroll();
+
+/* smooth scroll for sidebar links */
+tocLinks.forEach(a => a.addEventListener('click', (e) => {
+  const href = a.getAttribute('href');
+  if (href.startsWith('#')) {
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) window.scrollTo({top: el.offsetTop - 16, behavior: 'smooth'});
+  }
+}));
+</script>
+<script src="narrator.js"></script>
+</body>
+</html>
