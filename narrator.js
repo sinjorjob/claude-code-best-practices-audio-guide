@@ -1010,7 +1010,7 @@
     endingFab.className = 'ending-fab hidden';
     endingFab.setAttribute('aria-label', 'エンディングを見る');
     endingFab.setAttribute('title', 'エンディングロールを再生');
-    endingFab.innerHTML = `<span class="ef-icon">🎬</span><span class="ef-label">エンディング</span>`;
+    endingFab.innerHTML = `<span class="ef-label">Ending</span>`;
     endingFab.addEventListener('click', () => {
       narr.cancelNextTimer();
       narr.audio.pause();
