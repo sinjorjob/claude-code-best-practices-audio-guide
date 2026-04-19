@@ -1000,13 +1000,27 @@
       <div class="time">0:00 / 0:00</div>
       <button class="rate" data-act="rate" aria-label="再生速度" title="速度切替">1x</button>
       <button class="nav-btn cc active" data-act="cc" aria-label="字幕の表示切替" title="字幕 (C)">CC</button>
-      <button class="ending-btn" data-act="ending" aria-label="エンディングを見る" title="エンディングロールを再生">
-        <span class="ending-icon">🎬</span><span class="ending-label">エンディング</span>
-      </button>
       <button class="nav-btn" data-act="close" aria-label="プレイヤーを閉じる" title="閉じる">×</button>
       <div class="now"></div>
     `;
     document.body.appendChild(bar);
+
+    // エンディング再生用フローティング ボタン（再生バーから独立）
+    const endingFab = document.createElement('button');
+    endingFab.className = 'ending-fab hidden';
+    endingFab.setAttribute('aria-label', 'エンディングを見る');
+    endingFab.setAttribute('title', 'エンディングロールを再生');
+    endingFab.innerHTML = `<span class="ef-icon">🎬</span><span class="ef-label">エンディング</span>`;
+    endingFab.addEventListener('click', () => {
+      narr.cancelNextTimer();
+      narr.audio.pause();
+      narr.playing = false;
+      narr.updatePlayButton();
+      if (narr.captionEl) narr.captionEl.classList.add('hidden');
+      narr.enterTheater();
+      narr.playEndingCredits(true);
+    });
+    document.body.appendChild(endingFab);
 
     // シネマ字幕オーバーレイ
     const caption = document.createElement('div');
@@ -1112,6 +1126,7 @@
       narr.playing = false;
       caption.classList.add('hidden');
       bar.classList.add('hidden');
+      endingFab.classList.add('hidden');
       fab.classList.remove('hidden');
       narr.exitTheater();
       narr.updatePlayButton();
@@ -1125,6 +1140,7 @@
     fab.addEventListener('click', () => {
       fab.classList.add('hidden');
       bar.classList.remove('hidden');
+      endingFab.classList.remove('hidden');
       if (narr.idx < 0) narr.playBlock(0);
     });
 
@@ -1140,19 +1156,11 @@
         case 'nextCh': narr.nextChapter(); break;
         case 'rate': narr.cycleRate(); break;
         case 'cc': narr.toggleCaption(); break;
-        case 'ending':
-          narr.cancelNextTimer();
-          narr.audio.pause();
-          narr.playing = false;
-          narr.updatePlayButton();
-          if (narr.captionEl) narr.captionEl.classList.add('hidden');
-          narr.enterTheater();
-          narr.playEndingCredits(true);
-          break;
         case 'close':
           narr.audio.pause();
           narr.playing = false;
           bar.classList.add('hidden');
+          endingFab.classList.add('hidden');
           fab.classList.remove('hidden');
           narr.exitTheater();
           narr.updatePlayButton();
