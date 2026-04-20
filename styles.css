@@ -576,12 +576,122 @@ hr.ornament::before { content: "◆ ◆ ◆"; color: var(--rule-strong); letter-
   transition: width .1s linear;
 }
 
-/* Responsive */
+/* ================= Responsive ================= */
+
+/* ensure code blocks never overflow on narrow screens */
+pre { white-space: pre-wrap; word-break: break-word; overflow-wrap: anywhere; }
+
+/* 860px — tablet landscape, laptop narrow */
 @media (max-width: 860px) {
   .page { grid-template-columns: 1fr; padding: 0 20px; gap: 0; }
   .sidebar { display: none; }
   .content { padding: 24px 0 80px; }
-  .doc-header { padding: 48px 0 32px; }
-  h1 { font-size: 38px; }
-  .pullquote { padding: 28px 24px; font-size: 20px; }
+  .doc-header { padding: 48px 0 32px; margin-bottom: 40px; }
+  .doc-header .subtitle { font-size: 19px; }
+  .doc-meta { gap: 20px 28px; }
+  .chapter { padding: 56px 0 12px; }
+  .chapter-header { margin-bottom: 28px; }
+  h3 { font-size: 20px; margin: 32px 0 10px; }
+  p.lead { font-size: 19px; }
+  blockquote { font-size: 20px; padding-left: 22px; margin: 28px 0; }
+  .pullquote { padding: 28px 24px; font-size: 20px; margin: 32px 0; }
+  .pullquote::before { font-size: 60px; top: 6px; left: 14px; }
+  .callout { padding: 18px 20px; font-size: 15px; }
+  .terminal { padding: 16px 18px; font-size: 13px; }
+  .checklist { padding: 24px 22px; }
+  .feat-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .steps > li { padding: 20px 0 20px 58px; }
+  .qa .qa-body { padding-left: 46px; margin-left: 16px; margin-right: 16px; }
+  .qa summary { padding: 16px 18px; font-size: 15.5px; gap: 12px; }
+}
+
+/* 640px — tablet portrait / large phone */
+@media (max-width: 640px) {
+  body { font-size: 16px; line-height: 1.72; }
+  .page { padding: 0 16px; }
+  .content { padding: 16px 0 72px; }
+  .doc-header { padding: 32px 0 24px; margin-bottom: 32px; }
+  .doc-header .subtitle { font-size: 17px; line-height: 1.55; }
+  .doc-meta { gap: 14px 24px; margin-top: 28px; padding-top: 18px; }
+  .doc-meta .meta-item { flex: 1 1 130px; }
+  .eyebrow { font-size: 11px; margin-bottom: 20px; letter-spacing: 0.12em; }
+  .eyebrow::before { width: 20px; }
+  .chapter { padding: 48px 0 8px; }
+  .chapter-header { margin-bottom: 24px; }
+  .chapter-num { font-size: 11px; margin-bottom: 8px; }
+  h2 { margin-bottom: 18px; }
+  h3 { font-size: 19px; margin: 28px 0 10px; }
+  h4 { font-size: 16px; margin: 22px 0 6px; }
+  p { margin: 0 0 16px; }
+  p.lead { font-size: 17.5px; }
+  blockquote { font-size: 18px; padding: 2px 0 2px 18px; border-left-width: 3px; margin: 24px 0; }
+  blockquote cite { font-size: 13px; margin-top: 8px; }
+  .pullquote { padding: 30px 22px 24px; font-size: 18px; margin: 28px 0; border-radius: var(--radius); }
+  .pullquote::before { font-size: 52px; top: 0; left: 10px; }
+  .pullquote .pullquote-attr { font-size: 11.5px; margin-top: 14px; }
+  .callout { padding: 16px 18px; font-size: 14.5px; margin: 22px 0; }
+  .callout .callout-label { font-size: 10.5px; }
+  .terminal { padding: 14px 16px; font-size: 12.5px; line-height: 1.65; border-radius: var(--radius-sm); }
+  .terminal .term-title { display: none; }
+  .feat-grid { grid-template-columns: 1fr; gap: 12px; margin: 24px 0; }
+  .feat-card { padding: 20px 18px; }
+  .feat-card h4 { font-size: 17px; }
+  .feat-card p { font-size: 13.5px; }
+  .diagram { padding: 18px 12px; margin: 24px 0; }
+  .diagram .diagram-caption { font-size: 12px; margin-top: 12px; }
+  /* チェックリスト：タップしやすく、縦ゆったり */
+  .checklist { padding: 20px 18px; margin: 24px 0; border-radius: var(--radius); }
+  .checklist h3 { font-size: 17px; }
+  .checklist h3::before { width: 20px; height: 20px; }
+  .checklist-group { margin: 20px 0; }
+  .checklist-group-title { font-size: 10.5px; margin-bottom: 10px; }
+  .check-item { padding: 14px 0; gap: 10px; min-height: 48px; }
+  .check-item .box { width: 22px; height: 22px; margin-top: 3px; }
+  .check-item .text { font-size: 14.5px; line-height: 1.55; }
+  /* 箇条書き：左インデント削減 */
+  ul, ol { padding-left: 20px; }
+  .steps > li { padding: 18px 0 18px 42px; }
+  .steps > li::before { font-size: 12px; top: 20px; }
+  .steps > li::after { left: 22px; top: 28px; width: 12px; }
+  .steps li h4 { font-size: 16.5px; }
+  .steps li p { font-size: 14px; }
+  /* Q&A: Q アイコン小さく、左余白削減 */
+  .qa summary { padding: 14px 16px; font-size: 15px; gap: 10px; }
+  .qa summary::before { width: 22px; height: 22px; font-size: 12px; }
+  .qa summary::after { font-size: 20px; }
+  .qa .qa-body { padding: 14px 16px 18px; margin: 0; font-size: 14.5px; border-top: 1px dashed var(--rule); }
+  /* 図表内のSVGは幅いっぱいに */
+  .diagram svg { max-width: 100%; height: auto; }
+  /* 区切り線・飾り */
+  hr { margin: 40px 0; }
+  hr.ornament { margin: 40px 0; }
+  hr.ornament::before { letter-spacing: 10px; }
+  /* フッター */
+  .doc-footer { margin-top: 56px; padding: 28px 0; font-size: 12.5px; }
+  /* テーマトグルはジャマなので少し引っ込める */
+  .tweaks-panel { bottom: 16px; right: 16px; padding: 4px; }
+  .tweaks-panel button { padding: 6px 10px; font-size: 11px; }
+}
+
+/* 480px — small phone */
+@media (max-width: 480px) {
+  body { font-size: 15.5px; }
+  .page { padding: 0 14px; }
+  .doc-header { padding: 24px 0 18px; margin-bottom: 24px; }
+  .doc-header .subtitle { font-size: 16px; }
+  .doc-meta { font-size: 12px; gap: 12px 20px; }
+  h3 { font-size: 18px; }
+  h4 { font-size: 15.5px; }
+  p.lead { font-size: 16.5px; }
+  blockquote { font-size: 17px; padding-left: 14px; }
+  .pullquote { padding: 26px 16px 20px; font-size: 16.5px; }
+  .pullquote::before { font-size: 44px; }
+  .callout { padding: 14px 16px; font-size: 14px; }
+  .terminal { padding: 12px 14px; font-size: 12px; }
+  .feat-card { padding: 18px 16px; }
+  .checklist { padding: 18px 14px; }
+  .check-item .text { font-size: 14px; }
+  .steps > li { padding: 16px 0 16px 36px; }
+  .qa summary { padding: 12px 14px; font-size: 14.5px; }
+  .qa .qa-body { padding: 12px 14px 16px; font-size: 14px; }
 }
